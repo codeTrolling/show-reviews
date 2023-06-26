@@ -8,6 +8,8 @@ import LoginRegisterBackground from './Components/LoginRegisterBackground';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NotFound from './Components/NotFound';
+import WriteReview from './Components/WriteReview';
 
 function App() {
   return (
@@ -16,24 +18,21 @@ function App() {
       <div style={{marginTop: '50px'}}></div>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/AllShows/:filter'>
+        <Route path='/AllShows'>
           <Route index element={<AllShows/>} />
           <Route path=':filter' element={<AllShows/>} />
         </Route>
         <Route path='/Show/:show' element={<Show/>} />
         <Route path='/Login' element={<><LoginRegisterBackground/><Login/></>} />
         <Route path='/Register' element={<><LoginRegisterBackground/><Register/></>} />
-        {/* <Show/>
-        <AllShows/>
-        <LoginRegisterBackground/>
-        <Login/>
-        <Register/> */}
+        <Route path='/WriteReview'>
+          <Route index element={<WriteReview/>} />
+          <Route path=':show' element={<WriteReview/>} />
+        </Route>
+        <Route path='*' element={<NotFound/>} />
       </Routes>
        <Footer/> 
     </>
-    // <Routes>
-    //   <Route path='/' element={<Home/>}/>
-    // </Routes>
   );
 }
 

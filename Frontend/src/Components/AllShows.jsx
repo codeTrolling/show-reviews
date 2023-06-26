@@ -108,15 +108,15 @@ const AllShows = () => {
                         return(
                             <div key={index} className='flex all-shows-show-container'>
                                 <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{"#" + (index + 1)}</label></div>
-                                <div className='flex all-shows-show-title-container'>
-                                    <Link to={"/Show/" + item.id}> <img src={item.img} alt="" className='all-shows-show-image'/> </Link>
+                                <Link to={"/Show/" + item.id} className='flex all-shows-show-title-container'>{/*<div className='flex all-shows-show-title-container'>*/}
+                                    <img src={item.img} alt="" className='all-shows-show-image'/>
                                     <div className='flex all-shows-show-title-and-details'>
                                         <label className='text-styling all-shows-show-title'>{item.title}</label>
                                         <label className='text-styling all-shows-show-detail'>{item.type}</label>
                                         <label className='text-styling all-shows-show-detail'>{"Duration: " + item.duration}</label>
                                         <label className='text-styling all-shows-show-detail'>{"Release date: " + item.releaseDate}</label>
                                     </div>
-                                </div>
+                                {/*</div>*/} </Link>
                                 <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{item.rating}</label></div>
                                 <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{item.reviews}</label></div>
                             </div>

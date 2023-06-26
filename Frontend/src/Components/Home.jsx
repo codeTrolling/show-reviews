@@ -213,7 +213,7 @@ const Home = () => {
             <img src={hiddenLeftImage.img} alt="" className='side-image'/> */}
             {/*<img src={firstImage.img} alt="" className='center-image'/>*/}
             {movieImages.map((image, index) =>(
-                <Link to={"/Show/" + movies[index].id}><img key={image[0].id} src={image[0].img} style={{transform: "translateX(" + `${image[1]}px`, width: `${image[2]}`, height: `${image[3]}`, opacity: `${image[4]}`}} className='side-image'></img></Link>
+                <Link to={"/Show/" + image[0].id} key={index}><img src={image[0].img} style={{transform: "translateX(" + `${image[1]}px`, width: `${image[2]}`, height: `${image[3]}`, opacity: `${image[4]}`}} className='side-image'></img></Link>
             )) }
 
             {/*imageOrderState === 0 && (<> <img src={firstImage[0].img} style={{transform: "translateX(" + `${image[1]}px`, width: `${index === centerImage ? '280px' : '220px'}`, height: `${index === centerImage ? '420px': '360px'}`}} className='side-image'/> <img/> </>)*/}

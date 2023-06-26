@@ -149,7 +149,9 @@
 }
 
 .review-writer-username{
-    margin-left: 10px
+    margin-left: 10px;
+    border-right: solid 2px rgb(0, 255, 136);
+    padding-right: 15px;
 }
 
 .like-review-button{
@@ -157,7 +159,7 @@
     width: 15px;
     background-color: green;
     cursor: pointer;
-    margin-left: 50%;
+    margin-left: auto;
 }
 
 .dislike-review-button{
@@ -165,7 +167,8 @@
     width: 15px;
     background-color: red;
     cursor: pointer;
-    margin-left: 5%;
+    margin-left: 10px;
+    margin-right: 40px;
 }
 
 .review-text{
@@ -195,4 +198,8 @@
 }
 .more-or-less-btn:hover{
     color: rgb(0, 255, 136);
+}
+
+.review-writer-rating{
+    margin-left: 15px;
 }
