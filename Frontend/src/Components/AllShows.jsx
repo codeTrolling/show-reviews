@@ -5,12 +5,13 @@ import jojo from '../Assets/JoJo_Part_1_Phantom_Blood.jpg';
 import jwick from '../Assets/John_Wick_TeaserPoster.jpg';
 import mimpossible from '../Assets/MissionImpossiblePoster.jpg';
 import castle from '../Assets/Castle_Season_1.jpg';
+import { Link } from 'react-router-dom';
 
 const AllShows = () => {
 
     const movies = [
         {
-            "id": 1,
+            "id": "JohnWick",
             "img": jwick,
             "title": "John Wick",
             "rating": "8,82/10",
@@ -23,7 +24,7 @@ const AllShows = () => {
             "description": "D"
         },
         {
-            "id": 3,
+            "id": "MissionImpossible",
             "img": mimpossible,
             "title": "Mission impossible",
             "rating": "8,32/10",
@@ -36,7 +37,7 @@ const AllShows = () => {
             "description": "d"
         },
         {
-            "id": 4,
+            "id": "Castle",
             "img": castle,
             "title": "Castle",
             "rating": "7,93/10",
@@ -49,7 +50,7 @@ const AllShows = () => {
             "description": "d"
         },
         {
-            "id": 5,
+            "id": "JoJoBizzareAdventurePart1",
             "img": jojo,
             "title": "JoJo's Bizzare Adventure Part 1",
             "rating": "8,1/10",
@@ -108,7 +109,7 @@ const AllShows = () => {
                             <div key={index} className='flex all-shows-show-container'>
                                 <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{"#" + (index + 1)}</label></div>
                                 <div className='flex all-shows-show-title-container'>
-                                    <img src={item.img} alt="" className='all-shows-show-image'/>
+                                    <Link to={"/Show/" + item.id}> <img src={item.img} alt="" className='all-shows-show-image'/> </Link>
                                     <div className='flex all-shows-show-title-and-details'>
                                         <label className='text-styling all-shows-show-title'>{item.title}</label>
                                         <label className='text-styling all-shows-show-detail'>{item.type}</label>

@@ -6,12 +6,13 @@ import interstellar from '../Assets/Interstellar_film_poster.jpg';
 import mimpossible from '../Assets/MissionImpossiblePoster.jpg';
 import castle from '../Assets/Castle_Season_1.jpg';
 import jwick from '../Assets/John_Wick_TeaserPoster.jpg';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 
     const movies = [
         {
-            "id": 1,
+            "id": "JohnWick",
             "img": jwick,
             "title": "John Wick",
             "rating": "8,82/10",
@@ -24,7 +25,7 @@ const Home = () => {
             "description": "D"
         },
         {
-            "id": 2,
+            "id": "Interstellar",
             "img": interstellar,
             "title": "Interstellar",
             "rating": "9,71/10",
@@ -37,7 +38,7 @@ const Home = () => {
             "description": "d"
         },
         {
-            "id": 3,
+            "id": "MissionImpossible",
             "img": mimpossible,
             "title": "Mission impossible",
             "rating": "8,32/10",
@@ -50,7 +51,7 @@ const Home = () => {
             "description": "d"
         },
         {
-            "id": 4,
+            "id": "Castle",
             "img": castle,
             "title": "Castle",
             "rating": "7,93/10",
@@ -63,7 +64,7 @@ const Home = () => {
             "description": "d"
         },
         {
-            "id": 5,
+            "id": "JoJoBizzareAdventurePart1",
             "img": jojo,
             "title": "JoJo's Bizzare Adventure Part 1",
             "rating": "8,1/10",
@@ -211,8 +212,8 @@ const Home = () => {
             <img src={hiddenRightImage.img} alt="" className='side-image'/>
             <img src={hiddenLeftImage.img} alt="" className='side-image'/> */}
             {/*<img src={firstImage.img} alt="" className='center-image'/>*/}
-            {movieImages.map((image) =>(
-                <img key={image[0].id} src={image[0].img} style={{transform: "translateX(" + `${image[1]}px`, width: `${image[2]}`, height: `${image[3]}`, opacity: `${image[4]}`}} className='side-image'></img>
+            {movieImages.map((image, index) =>(
+                <Link to={"/Show/" + movies[index].id}><img key={image[0].id} src={image[0].img} style={{transform: "translateX(" + `${image[1]}px`, width: `${image[2]}`, height: `${image[3]}`, opacity: `${image[4]}`}} className='side-image'></img></Link>
             )) }
 
             {/*imageOrderState === 0 && (<> <img src={firstImage[0].img} style={{transform: "translateX(" + `${image[1]}px`, width: `${index === centerImage ? '280px' : '220px'}`, height: `${index === centerImage ? '420px': '360px'}`}} className='side-image'/> <img/> </>)*/}

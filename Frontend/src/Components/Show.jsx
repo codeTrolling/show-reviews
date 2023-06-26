@@ -4,11 +4,12 @@ import '../Styles/multiUse.css';
 import '../Styles/ShowStyles.css';
 import { useState } from 'react';
 import { useRef } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Show = () => {
 
     const movie = {
-        "id": 3,
+        "id": "MissionImpossible1",
         "img": mimpossible,
         "title": "Mission impossible",
         "rating": "8,32/10",
@@ -40,6 +41,9 @@ const Show = () => {
         "dislikes": 25,
         "review-text": "ireviewsing sikjdasmdm "
     }]
+
+    const { show } = useParams();
+
     const cast = [[mimpossible, "The protagonist?", "Main", "Tom Cruise"], [jojo, "Jonathan Joestar", "Side", "Japanese Person"]]
 
     const [reviews, setReviews] = useState([]);

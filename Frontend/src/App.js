@@ -7,20 +7,31 @@ import AllShows from './Components/AllShows';
 import LoginRegisterBackground from './Components/LoginRegisterBackground';
 import Login from './Components/Login';
 import Register from './Components/Register';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <>
+     <>
       <NavigationBar/>
       <div style={{marginTop: '50px'}}></div>
-      {/* <Home/> */}
-      {/* <Show/> */}
-      {/* <AllShows/> */}
-      <LoginRegisterBackground/>
-      {/* <Login/> */}
-      <Register/>
-      <Footer/>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/AllShows/:filter'>
+          <Route index element={<AllShows/>} />
+          <Route path=':filter' element={<AllShows/>} />
+        </Route>
+        <Route path='/Show/:show' element={<Show/>} />
+        {/* <Show/>
+        <AllShows/>
+        <LoginRegisterBackground/>
+        <Login/>
+        <Register/> */}
+      </Routes>
+       <Footer/> 
     </>
+    // <Routes>
+    //   <Route path='/' element={<Home/>}/>
+    // </Routes>
   );
 }
 

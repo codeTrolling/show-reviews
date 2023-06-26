@@ -21,6 +21,7 @@
     font-size: 1.15rem;
     cursor: pointer;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
 }
 .nav-options:hover{
     color: rgb(0, 255, 136);
@@ -44,6 +45,7 @@
 .nav-drop-down{
     padding: 5px 0 5px 10px;
     cursor: pointer;
+    text-decoration: none;
 }
 .nav-drop-down:nth-of-type(2n){
     background-color: rgb(30, 30, 30);
