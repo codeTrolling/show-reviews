@@ -1,6 +1,7 @@
 import '../Styles/multiUse.css';
 import '../Styles/LoginStyles.css';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -22,8 +23,8 @@ const Login = () => {
                     })
                 }
                 <button className='text-styling heading-text-styling submit-btn' ref={submitBtn}>Submit</button>
-                <label className='text-styling login-hyperlinks'>Forgot password?</label>
-                <label className='text-styling login-hyperlinks'>New here? Register</label>
+                <Link to="/Reset Password" className='text-styling login-hyperlinks'>Forgot password?</Link>
+                <Link to="/Register" className='text-styling login-hyperlinks'>New here? Register</Link>
             </div>
         </div>
     )

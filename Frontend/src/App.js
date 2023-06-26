@@ -21,6 +21,8 @@ function App() {
           <Route path=':filter' element={<AllShows/>} />
         </Route>
         <Route path='/Show/:show' element={<Show/>} />
+        <Route path='/Login' element={<><LoginRegisterBackground/><Login/></>} />
+        <Route path='/Register' element={<><LoginRegisterBackground/><Register/></>} />
         {/* <Show/>
         <AllShows/>
         <LoginRegisterBackground/>
