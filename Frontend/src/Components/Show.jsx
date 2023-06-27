@@ -55,6 +55,7 @@ const Show = () => {
     const reviewsRef = useRef([]);
     const howLongIsTheReviewRef = useRef([]);
     const howBigIsTheReviewersProfile = useRef([]);
+    const showImageContainerRef = useRef();
     
 
     // useEffect(() => {
@@ -106,7 +107,7 @@ const Show = () => {
     return(
         <>
         <div className='flex viewport-container'>
-            <div className='flex image-and-cast-container'>
+            <div className='flex image-and-cast-container' ref={showImageContainerRef}>
                 <img src={mimpossible} alt="" className='show-image'/>
                 <div className='flex main-cast-heading'> <label className='text-styling heading-text-styling' style={{fontSize: "1.15rem"}}>Main cast:</label> </div>
                 {
@@ -210,7 +211,7 @@ const Show = () => {
                         })
                     } */}
 
-                    <Review reviewsToRender={reviewsToRender}></Review>
+                    <Review reviewsToRender={reviewsToRender} howRightToGo={showImageContainerRef}></Review>
 
             </div>
         </div>
