@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 const Review = ( {reviewsToRender, howRightToGo} ) => {
 
     //TODO maybe rewrite the code to use states instead of refs
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState([]); // i think this is useless currently and could easily be remade
     const changeReviewBoxButtonState= useRef([]);
     const reviewsRef = useRef([]);
     const howLongIsTheReviewRef = useRef([]);
@@ -32,6 +32,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
     }
 
     useEffect(() => {
+        // remove "read more" buttons if the review isn't big enough to need them. also change review box size to only fit the review if needed.
         const testNoName = (index) => {
             if(reviewsRef.current[index].children[2] !== undefined && reviewsRef.current[index].offsetHeight > howBigIsTheReviewersProfile.current[index].offsetHeight + howLongIsTheReviewRef.current[index].offsetHeight + 50){
                 reviewsRef.current[index].children[2].remove();
@@ -45,10 +46,10 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
         reviewsToRender.map((item, index) => {
             testNoName(index);
         })
-        console.log("why am i not in for loop")
     },[])
 
     useEffect(() => {
+        // responsible for bringing the like pop up window to the correct like button
         const ifFuncInEffect = () => {
             if(likeButtonPopUpWindow[1] !== undefined){
                 let temp = [likeButtonRef.current[likeButtonPopUpWindow[1]].getBoundingClientRect().y, likeButtonRef.current[likeButtonPopUpWindow[1]].getBoundingClientRect().x]
@@ -61,6 +62,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
     }, [likeButtonPopUpWindow])
 
     useEffect(() => {
+        // responsible for bringing the dislike pop up window to the correct dislike button
         const ifFuncInEffect = () => {
             if(dislikeButtonPopUpWindow[1] !== undefined){
                 let temp = [dislikeButtonRef.current[dislikeButtonPopUpWindow[1]].getBoundingClientRect().y, dislikeButtonRef.current[dislikeButtonPopUpWindow[1]].getBoundingClientRect().x]
@@ -74,12 +76,12 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
 
     return(
         <>
+                    <label className="text-styling like-pop-up-window" ref={likeButtonWindowPopUpRef} style={{opacity: `${likeButtonPopUpWindow[0] ? "1" : "0"}`, top: `${likeTopAndLeft[0] !== undefined ? likeTopAndLeft[0] : "0"}`, left: `${likeTopAndLeft[1] !== undefined ? likeTopAndLeft[1] : "0"}`,transitionDelay: `${ likeButtonPopUpWindow[0] ? "0.5s" : "0s"}`}}>Like</label>
+                    <label className="text-styling dislike-pop-up-window" ref={dislikeButtonWindowPopUpRef} style={{opacity: `${dislikeButtonPopUpWindow[0] ? "1" : "0"}`, top: `${dislikeTopAndLeft[0] !== undefined ? dislikeTopAndLeft[0] : "0"}`, left: `${dislikeTopAndLeft[1] !== undefined ? dislikeTopAndLeft[1] : "0"}`,transitionDelay: `${ dislikeButtonPopUpWindow[0] ? "0.5s" : "0s"}`}}>Dislike</label>
           {  
                 reviewsToRender.map((item, index) => {
                     return(
                         <>
-                        <label className="text-styling like-pop-up-window" ref={likeButtonWindowPopUpRef} style={{opacity: `${likeButtonPopUpWindow[0] ? "1" : "0"}`, top: `${likeTopAndLeft[0] !== undefined ? likeTopAndLeft[0] : "0"}`, left: `${likeTopAndLeft[1] !== undefined ? likeTopAndLeft[1] : "0"}`}}>Like</label>
-                        <label className="text-styling dislike-pop-up-window" ref={dislikeButtonWindowPopUpRef} style={{opacity: `${dislikeButtonPopUpWindow[0] ? "1" : "0"}`, top: `${dislikeTopAndLeft[0] !== undefined ? dislikeTopAndLeft[0] : "0"}`, left: `${dislikeTopAndLeft[1] !== undefined ? dislikeTopAndLeft[1] : "0"}`}}>Dislike</label>
                         <div key={index} ref={e => reviewsRef.current[index] = e} className='flex show-review-container' style={{height: `${reviews[index] != null ? reviews[index] : "auto"}`, maxHeight: "300px"}}>
                             <div ref={e => howBigIsTheReviewersProfile.current[index] = e} className='flex review-writer'>
                                 <img src={item['writer-image']} alt="" className='review-writer-image'/>

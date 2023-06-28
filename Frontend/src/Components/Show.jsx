@@ -4,7 +4,7 @@ import '../Styles/multiUse.css';
 import '../Styles/ShowStyles.css';
 import { useState } from 'react';
 import { useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Review from './Review';
 
 const Show = () => {
@@ -58,47 +58,17 @@ const Show = () => {
     const showImageContainerRef = useRef();
     
 
-    // useEffect(() => {
-    //     reviewsRef.current = reviewsRef.current.slice("", reviewsToRender.length);
-    //     //setReviews(...reviews, "300px");
-    //  }, [reviewsToRender]);
-
     const changeReviewBoxSize = (index) => {
         // what was i doing with this???? even if it works?????????????
         // if(changeReviewBoxButtonState[index] != true){
 
         // }
-        // if(changeReviewBoxButtonState[index] === undefined){
-        //     let temp = changeReviewBoxButtonState;
-        //     temp[index] = true;
-        //     setChangeReviewButtonState(temp);
-        // } 
-        console.log(reviewsRef);
-        console.log(reviewsRef.current);
-        console.log(reviewsRef.current[index]);
-        console.log(reviewsRef.current[index].style.height);
-        console.log("this is text", howLongIsTheReviewRef.current[index].offsetHeight)
-        console.log(changeReviewBoxButtonState)
         if(reviewsRef.current[index].style.height === "300px"){
-            // let temp = reviews;
-            // temp[index] = "auto";
-            // let temp = howBigIsTheReviewersProfile.current[index].offsetHeight;
-            // let temp2 = howLongIsTheReviewRef.current[index].offsetHeight;
-            // temp = temp.split("px")[0];
-            // temp2 = temp2.split("px")[0];
             reviewsRef.current[index].style.height = howBigIsTheReviewersProfile.current[index].offsetHeight + howLongIsTheReviewRef.current[index].offsetHeight + 50 + "px";
-            // let temp = changeReviewBoxButtonState;
-            // temp[index] = false;
-            // setChangeReviewButtonState(temp);
             changeReviewBoxButtonState.current[index].textContent = "Read less";
         }
         else{
-            // let temp = reviews;
-            // temp[index] = "300px";
             reviewsRef.current[index].style.height = "300px";
-            // let temp = changeReviewBoxButtonState;
-            // temp[index] = true;
-            // setChangeReviewButtonState(temp);
             changeReviewBoxButtonState.current[index].textContent = "Read more";
         }
     }
@@ -164,7 +134,7 @@ const Show = () => {
 
                 <div className='flex additional-info-redirect-options-container'>
                     <label className='text-styling additional-info-redirect-options'>Type: {movie.type}</label>
-                    <label className='text-styling additional-info-redirect-options'>Write reviews</label>
+                    <Link to={"/WriteReview/" + movie.id} className='text-styling additional-info-redirect-options'>Write review</Link>
                     <label className='text-styling additional-info-redirect-options'>Read reviews</label>
                 </div>
 

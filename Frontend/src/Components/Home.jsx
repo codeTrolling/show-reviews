@@ -192,7 +192,7 @@ const Home = () => {
     const [thirdImage, setThirdImage] = useState([movies[2], 0, "220px", "360px", "1"]);
     const [fourthImage, setFourthImage] = useState([movies[3], 0, "220px", "360px", "0"]);
     const [fifthImage, setFifthImage] = useState([movies[4], 0, "220px", "360px", "0"]);
-    const movieImages = [firstImage, secondImage, thirdImage, fourthImage, fifthImage]
+    const movieImages = [firstImage, secondImage, thirdImage, fourthImage, fifthImage] // render images with this array
     const [imageOrderState, setImageOrderState] = useState(1);
     //var imageOrderState = 1;
     const [showInfoToDisplay, setShowInfoToDisplay] = useState(2);

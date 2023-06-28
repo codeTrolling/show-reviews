@@ -12,7 +12,9 @@ const WriteReview = () => {
     const chooseShowSearchRef = useRef();
     const reviewRef = useRef();
     const submitBtn = useRef();
+    const textareaPlaceholder = "Write your review here!\n*If nothing is written here you will rate the show you have chosen without leaving a review!*"
 
+    //TODO make searched shows appear as options 
     const chooseShow = () => {
         
     }
@@ -38,7 +40,7 @@ const WriteReview = () => {
                 </div>
             </div>
 
-            <textarea name="review" id="review" ref={reviewRef} className='text-styling write-review-area' placeholder='Write your review here!' onInput={() => {reviewRef.current.style.height = "300px"; reviewRef.current.style.height = reviewRef.current.scrollHeight + "px"}}></textarea>
+            <textarea name="review" id="review" ref={reviewRef} className='text-styling write-review-area' placeholder={textareaPlaceholder} onInput={() => {reviewRef.current.style.height = "300px"; reviewRef.current.style.height = reviewRef.current.scrollHeight + "px"}}></textarea>
             <div className='flex' style={{justifyContent: "center"}}><button className='text-styling heading-text-styling submit-btn' ref={submitBtn}>Submit</button></div>
         </div>
         </>

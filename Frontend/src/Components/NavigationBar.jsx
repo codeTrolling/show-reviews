@@ -26,7 +26,7 @@ const NavigationBar = () => {
             </div>
         </div>
         <Link to="/MyReviews" className='nav-options'>My reviews</Link>
-        <Link to="/LikedReviews" className='nav-options'>Liked reviews</Link>
+        <Link to="/WriteReview" className='nav-options'>Write review</Link>
         <Link to="/RatedShows" className='nav-options'>Rated shows</Link>
         <input type="text" name="search-show" id="search-show" placeholder='Search shows' className='nav-options search-input'/>
     </div>
