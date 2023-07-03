@@ -10,6 +10,7 @@ import Register from './Components/Register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from './Components/NotFound';
 import WriteReview from './Components/WriteReview';
+import RatedShows from './Components/RatedShows';
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
         <Route path='/WriteReview'>
           <Route index element={<WriteReview/>} />
           <Route path=':show' element={<WriteReview/>} />
+        </Route>
+        <Route path='/RatedShows'>
+          <Route index element={<RatedShows/>} />
+          <Route path=':filter' element={<RatedShows/>} />
         </Route>
         <Route path='*' element={<NotFound/>} />
       </Routes>

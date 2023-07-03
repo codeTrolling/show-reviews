@@ -31,6 +31,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
         }
     }
 
+    
     useEffect(() => {
         // remove "read more" buttons if the review isn't big enough to need them. also change review box size to only fit the review if needed.
         const testNoName = (index) => {
