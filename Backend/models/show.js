@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const showSchema = new mongoose.Schema({
-    showId: {
-        type: String,
-        required: true
-    },
     image: {
         type: Buffer,
         required: true

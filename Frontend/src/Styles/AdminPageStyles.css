@@ -1,0 +1,23 @@
+.admin-page-buttons-container{
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.modify-show-options-button{
+    width: 150px;
+    height: 40px;
+    border: 2px solid rgb(0, 255, 136);
+    background-color: rgb(0, 175, 93);
+    border-radius: 6px;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.modify-show-options-button:hover{
+    background-color: rgb(0, 138, 73);
+}
+
+.modify-shows-container{
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+}

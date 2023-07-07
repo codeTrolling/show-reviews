@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from './Components/NotFound';
 import WriteReview from './Components/WriteReview';
 import RatedShows from './Components/RatedShows';
+import AdminPage from './Components/AdminPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route index element={<RatedShows/>} />
           <Route path=':filter' element={<RatedShows/>} />
         </Route>
+        <Route path='/Secret/Admin' element={ <AdminPage/> } />
         <Route path='*' element={<NotFound/>} />
       </Routes>
        <Footer/> 
