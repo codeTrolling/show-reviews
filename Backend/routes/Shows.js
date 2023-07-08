@@ -7,4 +7,18 @@ router.get("/", async (req, res) => {
     res.json(shows)
 })
 
+router.post('/', async (req, res) => {
+    res.json(req.body);
+})
+
+router.delete("/:title", async (req, res) => {
+    let showToDelete = await show.find({ title: {"$eq": req.params.id}})
+    try{
+        await res.showToDelete.remove();
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
 module.exports = router;

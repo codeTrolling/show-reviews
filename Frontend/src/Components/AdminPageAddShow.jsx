@@ -87,11 +87,47 @@ const AdminPageAddShow = () => {
        }, [castMemberImageStateChange])
 
 
+       const addShow = () => {
+        let genres = formInputsRef.current[2].value.split(",");
+        let mainCast = [];
+        if(castMemberCharacterNameInputRef.current.length > 0){
+            for(let i = 0; i < castMemberCharacterNameInputRef.current.length; i++){
+                let temp = {
+                    "image": castMemberImageRef.current[i].files[0],
+                    "characterName": castMemberCharacterNameInputRef.current[i].value,
+                    "mainCharacter": castMemberIsMainCharacterRef.current[i].checked,
+                    "actorName": castMemberActorNameInputRef.current[i].value
+                }
+                mainCast.push(temp);
+            }
+        }
+        fetch("http://localhost:5000/api/shows", {
+            method: "POST",
+            headers: {"Content-type" : "application/json"},
+            body: JSON.stringify({
+                "image": showImageRef.current.files[0],
+                "title": formInputsRef.current[0].value,
+                "type": formInputsRef.current[1].value,
+                "genres": genres,
+                "duration": formInputsRef.current[3].value,
+                "pgRating": formInputsRef.current[4].value,
+                "releaseDate": formInputsRef.current[5].value,
+                "mainCast": mainCast,
+                "description": descriptionRef.current.value
+            })
+        }).then(r => {
+            return r.json()
+        }).then(r =>{
+            console.log(r)
+        })
+       }
+
+
     return(
         <>
         <div className="login-form" ref={formRef}>
-            <div className="flex" style={{alignItems: "center"}}><label htmlFor="show-image" className="text-styling heading-text-styling" ref={showImageRef}>Image:</label> 
-            <input type="file" name="show-image" id="show-image" style={{display: "none"}} onChange={onShowImageChange}/>
+            <div className="flex" style={{alignItems: "center"}}><label htmlFor="show-image" className="text-styling heading-text-styling" >Image:</label> 
+            <input type="file" name="show-image" id="show-image" style={{display: "none"}} accept="image/png, image/jpeg, image/jpg" onChange={onShowImageChange} ref={showImageRef}/>
             <img src={showImage} alt="" style={{height: "80px", maxWidth: "50px"}}/>
             </div>
             {
@@ -119,14 +155,14 @@ const AdminPageAddShow = () => {
                             <label htmlFor={"character-name" + index} className="text-styling heading-text-styling">Character name:</label>
                             <input type="text" name={"character-name" + index} id={"character-name" + index} ref={e => castMemberCharacterNameInputRef.current[index] = e} className="text-styling cast-member-form-input"/>
                             <label htmlFor={"actor-name" + index} className="text-styling heading-text-styling">Actor name:</label>
-                            <input type="text" name={"actor-name" + index} id={"actor-name" + index} ref={e => castMemberActorNameInputRef.current[index] = e} className="text-styling cast-member-form-input"/>
+                            <input type="text" name={"actor-name" + index} id={"actor-name" + index} ref={e => castMemberActorNameInputRef.current[index] = e} className="text-styling cast-member-form-input" onChange={() => castMemberIsMainCharacterRef.current[index] !== undefined ? console.log(castMemberIsMainCharacterRef.current[index].checked) : console.log("undefined rn")}/>
                             <div className="flex" style={{alignItems: "center"}}>
                                 <label htmlFor={"is-main" + index} className="text-styling heading-text-styling">Main?:</label>
-                                <input type="checkbox" name="is-main" id="is-main" ref={e => castMemberIsMainCharacterRef.current[index] = e} className="checkbox-input"/>
+                                <input type="checkbox" name="is-main" id="is-main" ref={e => castMemberIsMainCharacterRef.current[index] = e} className="checkbox-input" />
                             </div>
                             <div className="flex" style={{alignItems: "center"}}>
                                 <label htmlFor={"character-image" + index} className="text-styling heading-text-styling" onClick={() => setCastMemberImageIndex(index)}>Image: </label>
-                                <input type="file" name={"character-image" + index} id={"character-image" + index} ref={e => castMemberImageRef.current[index] = e} onChange={(e) => {onCharacterImageChange(e); setCastMemberImageStateChange(!castMemberImageStateChange)}} style={{display: "none"}}/>
+                                <input type="file" name={"character-image" + index} id={"character-image" + index} ref={e => castMemberImageRef.current[index] = e} accept="image/png, image/jpeg, image/jpg" onChange={(e) => {onCharacterImageChange(e); setCastMemberImageStateChange(!castMemberImageStateChange)}} style={{display: "none"}}/>
                                 <img src={castMemberImage[index]} alt="" ref={e => showCharacterImageIfPresentRef.current[index] = e} style={{height: "50px", maxWidth: "36px"}}/>
                             </div>
                         </div>
@@ -134,7 +170,7 @@ const AdminPageAddShow = () => {
                     )
                 })
             }
-            <div className="flex" style={{justifyContent: "center"}}><button className="text-styling heading-text-styling submit-btn" ref={submitBtnRef} style={{marginTop: "5px"}}>Submit</button></div>
+            <div className="flex" style={{justifyContent: "center"}}><button className="text-styling heading-text-styling submit-btn" ref={submitBtnRef} style={{marginTop: "5px"}} onClick={addShow}>Submit</button></div>
         </div>
         </>
     )
