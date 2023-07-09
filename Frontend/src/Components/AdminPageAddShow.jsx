@@ -92,26 +92,42 @@ const AdminPageAddShow = () => {
         let mainCast = [];
         if(castMemberCharacterNameInputRef.current.length > 0){
             for(let i = 0; i < castMemberCharacterNameInputRef.current.length; i++){
+                var converttImageToBase64 = new FileReader();
+        converttImageToBase64.readAsDataURL(castMemberImageRef.current[i].files[0]);
+        converttImageToBase64.onload = () =>{
+            console.log(converttImageToBase64.result)
                 let temp = {
-                    "image": castMemberImageRef.current[i].files[0],
+                    "image": converttImageToBase64.result,
                     "characterName": castMemberCharacterNameInputRef.current[i].value,
                     "mainCharacter": castMemberIsMainCharacterRef.current[i].checked,
                     "actorName": castMemberActorNameInputRef.current[i].value
                 }
-                mainCast.push(temp);
+                mainCast.push(temp);}
             }
         }
+
+        var convertImageToBase64 = new FileReader();
+        convertImageToBase64.readAsDataURL(showImageRef.current.files[0]);
+        convertImageToBase64.onload = () => {
+            //console.log(convertImageToBase64.result)
+        
+
+        // const formData = new FormData();
+        // formData.append("image", showImageRef.current.files[0])
+        // console.log(formData)
+        // var buffer = new Buffer.from(showImageRef.current.files[0])
+        // console.log(buffer);
         fetch("http://localhost:5000/api/shows", {
             method: "POST",
             headers: {"Content-type" : "application/json"},
             body: JSON.stringify({
-                "image": showImageRef.current.files[0],
+                "image": convertImageToBase64.result,
                 "title": formInputsRef.current[0].value,
                 "type": formInputsRef.current[1].value,
                 "genres": genres,
                 "duration": formInputsRef.current[3].value,
                 "pgRating": formInputsRef.current[4].value,
-                "releaseDate": formInputsRef.current[5].value,
+                "releaseDate": parseInt(formInputsRef.current[5].value),
                 "mainCast": mainCast,
                 "description": descriptionRef.current.value
             })
@@ -120,7 +136,7 @@ const AdminPageAddShow = () => {
         }).then(r =>{
             console.log(r)
         })
-       }
+       }}
 
 
     return(

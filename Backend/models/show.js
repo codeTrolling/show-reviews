@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const showSchema = new mongoose.Schema({
     image: {
-        type: Buffer,
+        type: String,
         required: true
     },
     title: {
@@ -30,7 +30,7 @@ const showSchema = new mongoose.Schema({
     },
     mainCast: {
         type: [{
-            image: Buffer,
+            image: String,
             characterName: String,
             mainCharacter: Boolean,
             actorName: String
