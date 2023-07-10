@@ -21,3 +21,20 @@
     align-items: center;
     margin-top: 70px;
 }
+
+.modal-window{
+    position: absolute;
+    flex-direction: column;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    /*background-color: rgb(15, 15, 15);*/
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+}

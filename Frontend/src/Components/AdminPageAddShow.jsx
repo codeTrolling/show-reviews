@@ -135,6 +135,12 @@ const AdminPageAddShow = () => {
             return r.json()
         }).then(r =>{
             console.log(r)
+            if(r.status === "200"){
+                alert("Successfully added show!")
+            }
+            else{
+                alert("Something went wrong: " + r.message)
+            }
         })
        }}
 
@@ -142,7 +148,7 @@ const AdminPageAddShow = () => {
     return(
         <>
         <div className="login-form" ref={formRef}>
-            <div className="flex" style={{alignItems: "center"}}><label htmlFor="show-image" className="text-styling heading-text-styling" >Image:</label> 
+            <div className="flex" style={{alignItems: "center"}}><label htmlFor="show-image" className="text-styling heading-text-styling" style={{cursor: "pointer"}}>Image:</label> 
             <input type="file" name="show-image" id="show-image" style={{display: "none"}} accept="image/png, image/jpeg, image/jpg" onChange={onShowImageChange} ref={showImageRef}/>
             <img src={showImage} alt="" style={{height: "80px", maxWidth: "50px"}}/>
             </div>
@@ -177,7 +183,7 @@ const AdminPageAddShow = () => {
                                 <input type="checkbox" name="is-main" id="is-main" ref={e => castMemberIsMainCharacterRef.current[index] = e} className="checkbox-input" />
                             </div>
                             <div className="flex" style={{alignItems: "center"}}>
-                                <label htmlFor={"character-image" + index} className="text-styling heading-text-styling" onClick={() => setCastMemberImageIndex(index)}>Image: </label>
+                                <label htmlFor={"character-image" + index} className="text-styling heading-text-styling" onClick={() => setCastMemberImageIndex(index)} style={{cursor: "pointer"}}>Image: </label>
                                 <input type="file" name={"character-image" + index} id={"character-image" + index} ref={e => castMemberImageRef.current[index] = e} accept="image/png, image/jpeg, image/jpg" onChange={(e) => {onCharacterImageChange(e); setCastMemberImageStateChange(!castMemberImageStateChange)}} style={{display: "none"}}/>
                                 <img src={castMemberImage[index]} alt="" ref={e => showCharacterImageIfPresentRef.current[index] = e} style={{height: "50px", maxWidth: "36px"}}/>
                             </div>

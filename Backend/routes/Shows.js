@@ -72,7 +72,9 @@ router.post('/', async (req, res) => {
     })
     try{
         const newShow = await showToAdd.save();
-        res.status(200).json(newShow);
+        let temp = {}
+        temp["status"] = "200"
+        res.status(200).json(temp);
     }
     catch (err){
         res.status(400).json({message: err.message})
@@ -84,9 +86,12 @@ router.delete("/:title", async (req, res) => {
     //const showToDelete = await show.findById(req.params.title);
     try{
         await showToDelete.deleteOne();
+        let temp = { "status" : "200"};
+        res.status(200).json(temp);
     }
     catch (err) {
         console.log(err);
+        res.status(400).json({message: err.message})
     }
 })
 

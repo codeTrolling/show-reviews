@@ -2,6 +2,7 @@ import "../Styles/multiUse.css";
 import "../Styles/AdminPageStyles.css";
 import { useRef, useState } from "react";
 import AdminPageAddShow from "./AdminPageAddShow";
+import AdminPageDeleteShow from "./AdminPageDeleteShow";
 
 const AdminPage = () => {
 
@@ -25,7 +26,7 @@ const AdminPage = () => {
                 <button>ste</button></>} */}
             {modifyShowOption === "Add" && <AdminPageAddShow/>}
             {modifyShowOption === "Edit" && <div>Edit</div>}
-            {modifyShowOption === "Delete" && <div>delete</div>}
+            {modifyShowOption === "Delete" && <div><AdminPageDeleteShow/></div>}
             
         </div>
         </>
