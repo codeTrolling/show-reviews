@@ -81,6 +81,14 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.post("/search", async (req, res) => {
+    const shows = await show.find({"title" : {"$regex" : req.body.title, "$options": "i"}}).sort({"reviewsCount" : 1}).limit(7);
+    //const shows = await show.find({"title" : '/.*' + req.body.title + '.*/i'}).sort({"reviewsCount" : 1}).limit(7);
+    if(shows !== null){
+        res.json(shows);
+    }
+})
+
 router.delete("/:title", async (req, res) => {
     const showToDelete = await show.findOne({title: {"$eq": req.params.title}})
     //const showToDelete = await show.findById(req.params.title);

@@ -1,5 +1,5 @@
 import '../Styles/multiUse.css';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 const NavigationBar = () => {
@@ -7,6 +7,38 @@ const NavigationBar = () => {
     const [dropDownMenu, setDropDownMenu] = useState(false)
     const showDropDownMenu = () => {
         setDropDownMenu(true);
+    }
+    const searchShowRef = useRef();
+    const [probableShows, setProbableShows] = useState([]);
+
+    const displayProbableShows = () => {
+        if(searchShowRef.current.value !== ""){
+            console.log(searchShowRef.current.value)
+            fetch("http://localhost:5000/api/shows/search", {
+                method: "POST",
+                headers: {"Content-type" : "application/json"},
+                body: JSON.stringify({
+                    "title": searchShowRef.current.value
+                })
+            }).then(r => {
+                if(r !== null){
+                    console.log(r)
+                    return r.json()
+                }
+                return null
+            }).then(r => {
+                if(r !== null){
+                    console.log(r);
+                    setProbableShows([]);
+                    r.forEach(element => {
+                        setProbableShows(c => [...c, element])  
+                    });
+                }
+            })
+        }
+        else{
+            setProbableShows([]);
+        }
     }
 
     return(
@@ -28,7 +60,19 @@ const NavigationBar = () => {
         <Link to="/MyReviews" className='nav-options'>My reviews</Link>
         <Link to="/WriteReview" className='nav-options'>Write review</Link>
         <Link to="/RatedShows" className='nav-options'>Rated shows</Link>
-        <input type="text" name="search-show" id="search-show" placeholder='Search shows' className='nav-options search-input'/>
+        <div className='flex nav-search-show-container'>
+            <input type="text" name="search-show" id="search-show" placeholder='Search shows' className='nav-options search-input' ref={searchShowRef} onChange={displayProbableShows}/>
+            {
+                probableShows.map((item, index) => {
+                    return(
+                        <Link key={index} to={"/Show/" + item.title} className='nav-search-show-probable-shows flex' onClick={() => setProbableShows([])}>
+                            <img src={item.image} alt="" className='probable-show-image'/>
+                            <label className='text-styling heading-text-styling' style={{cursor: "pointer"}}>{item.title}</label>
+                        </Link>
+                    )
+                })
+            }
+        </div>
     </div>
     </>)
 }
