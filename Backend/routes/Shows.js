@@ -53,6 +53,37 @@ router.get("/getShow/:show", async (req, res) => {
     }
 })
 
+router.get("/AllShows/:filter", async (req, res) => {
+    var shows;
+    if(req.params.filter === "Top rated"){
+        shows = await show.find().sort({"rating" : 1, "reviewsCount": 1}).limit(20)
+    }
+    else if(req.params.filter === "Most popular"){
+        shows = await show.find().sort({"reviewsCount" : 1, "rating": 1}).limit(20)
+    }
+    else if(req.params.filter === "Newest"){
+        shows = await show.find().sort({"releaseDate" : -1, "rating": 1}).limit(20)
+    }
+    else if(req.params.filter === "Lowest rated"){
+        shows = await show.find().sort({"rating" : -1, "reviewsCount": 1}).limit(20)
+    }
+    else if(req.params.filter === "Movies"){
+        shows = await show.find({"type": "Movie"}).sort({"rating" : 1, "reviewsCount": 1}).limit(20)
+    }
+    else if(req.params.filter === "TV series"){
+        shows = await show.find({"type": "TV series"}).sort({"rating" : 1, "reviewsCount": 1}).limit(20)
+    }
+    else if(req.params.filter === "Anime"){
+        shows = await show.find({"type": "Anime"}).sort({"rating" : 1, "reviewsCount": 1}).limit(20)
+    }
+    try{
+        res.json(shows)
+    }
+    catch (err){
+        res.json({"message": err.message})
+    }
+})
+
 router.post('/', async (req, res) => {
     // const promise = fs.promises.readFile(path(req.body.image));
     // var imageBuffer;

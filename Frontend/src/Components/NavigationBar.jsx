@@ -48,13 +48,13 @@ const NavigationBar = () => {
         <Link to={"/"} className='nav-options'>Home</Link>
         <div>
             {/* <label className='nav-options' onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>Shows</label> */}
-            <Link to={"/AllShows/TopRated"} className='nav-options' onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>Shows</Link>
+            <Link to={"/AllShows/Top Rated"} className='nav-options' onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>Shows</Link>
             <div className='nav-drop-down-container' style={{position: 'absolute', opacity: `${dropDownMenu ? '1' : '0'}`, transform: 'translateY(' + `${dropDownMenu ? '0px)' : '-20px)'}`, pointerEvents: `${dropDownMenu ? 'all' : 'none'}`}} onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>
                 {/* <label className='text-styling nav-drop-down'>Top rated</label> */}
-                <Link to="/AllShows/TopRated" className='text-styling nav-drop-down'>Top rated</Link>
-                <Link to="/AllShows/Popular" className='text-styling nav-drop-down'>Popular</Link>
-                <Link to="/AllShows/New" className='text-styling nav-drop-down'>New</Link>
-                <Link to="/AllShows/LowestRated" className='text-styling nav-drop-down'>Lowest rated</Link>
+                <Link to="/AllShows/Top rated" className='text-styling nav-drop-down'>Top rated</Link>
+                <Link to="/AllShows/Most popular" className='text-styling nav-drop-down'>Popular</Link>
+                <Link to="/AllShows/Newest" className='text-styling nav-drop-down'>New</Link>
+                <Link to="/AllShows/Lowest rated" className='text-styling nav-drop-down'>Lowest rated</Link>
             </div>
         </div>
         <Link to="/MyReviews" className='nav-options'>My reviews</Link>
