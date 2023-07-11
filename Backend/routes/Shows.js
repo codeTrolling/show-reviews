@@ -43,6 +43,16 @@ router.get("/", async (req, res) => {
     res.json(shows)
 })
 
+router.get("/getShow/:show", async (req, res) => {
+    const showToGet = await show.findOne({title: {"$eq": req.params.show}});
+    try{
+        res.json(showToGet);
+    }
+    catch (err) {
+        res.json({"message": err.message})
+    }
+})
+
 router.post('/', async (req, res) => {
     // const promise = fs.promises.readFile(path(req.body.image));
     // var imageBuffer;

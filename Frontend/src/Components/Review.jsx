@@ -82,7 +82,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
           {  
                 reviewsToRender.map((item, index) => {
                     return(
-                        <>
+                        
                         <div key={index} ref={e => reviewsRef.current[index] = e} className='flex show-review-container' style={{height: `${reviews[index] != null ? reviews[index] : "auto"}`, maxHeight: "300px"}}>
                             <div ref={e => howBigIsTheReviewersProfile.current[index] = e} className='flex review-writer'>
                                 <img src={item['writer-image']} alt="" className='review-writer-image'/>
@@ -94,7 +94,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
                             <p className='text-styling review-text' ref={e => howLongIsTheReviewRef.current[index] = e}>{"I suppose I’ll start off with how it adapted the source material. Unlike the OVAs and Phantom Blood movie, there were no cuts in content, and it actually adapted parts 1 and 2 of the manga: Phantom Blood and Battle Tendency. The studio, David Production, did what I would consider a masterful job in terms of bringing out Araki Hirohiko’s style into the manga. He is an artist, and you can see his art evolve throughout the long-running JoJo’s Bizarre Adventure franchise. DP hired multiple art directors and tried to incorporate the different faces and builds in body throughout the series. Also, because there is no such thing as “canon” colors for characters, DP, in an unexpected but very innovative manner, used their poor budget to their advantage—by changing color schemes and using colorful abstract backgrounds during monologues and still-frames. I’ll give the art by itself a 10/10, even though sometimes Jonathan and Joseph, the titular JoJos in this series, suffer from Gorilla Face Syndrome, since the BD/DVDs are doing a great job of fixing it."}</p>
                             <div className='flex more-or-less-btn-container'><button ref={e => changeReviewBoxButtonState.current[index] = e} onClick={() => changeReviewBoxSize(index)} className='text-styling more-or-less-btn'>Read more</button></div>
                         </div>
-                        </>
+                        
                         
                 )
             })
