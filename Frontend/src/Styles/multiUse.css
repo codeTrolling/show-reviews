@@ -134,6 +134,8 @@ img{
     border-radius: 50%;
     cursor: pointer;
     padding: 0px 10px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .nav-profile-options-container{

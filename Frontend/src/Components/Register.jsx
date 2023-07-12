@@ -1,12 +1,14 @@
 import '../Styles/multiUse.css';
 import '../Styles/LoginStyles.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
 
     const labelsForInputs = ["Email", "Username", "Password", "Confirm password"]
     const inputRef = useRef([])
+    const profileImageRef = useRef();
+    const [profileImage, setProfileImage] = useState();
     const submitBtn = useRef();
 
     return(
@@ -22,6 +24,10 @@ const Register = () => {
                         )
                     })
                 }
+                <label htmlFor="profile-image" style={{cursor: "pointer"}} className='text-styling heading-text-styling'>{"Image (optional)"}</label>
+                <input type="file" name="profile-image" id="profile-image" accept='image/png, image/jpg, image/jpeg' style={{display: "none"}} ref={profileImageRef} onChange={() => setProfileImage(URL.createObjectURL(profileImageRef.current.files[0]))}/>
+                {console.log(profileImage)}
+                <img src={profileImage} alt="" className='register-profile-picture' style={{display: profileImage === undefined ? "none" : "block"}}/>
                 <button className='text-styling heading-text-styling submit-btn' ref={submitBtn}>Submit</button>
                 <Link to="/Login" className='text-styling login-hyperlinks'>Already registered? Login.</Link>
 
