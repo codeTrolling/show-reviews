@@ -127,3 +127,48 @@ img{
     max-width: 40px;
     margin: 0 10px 0 5px;
 }
+
+.nav-profile-pic{
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0px 10px;
+}
+
+.nav-profile-options-container{
+    align-self: normal;
+    flex-direction: column;
+    margin: 1px 3% 0 auto
+}
+
+.nav-profile-options{
+    position: absolute;
+    white-space: nowrap;
+    top: 40px;
+    right: 10px;
+    /* border: 1px solid rgb(0, 255, 136); */
+    border-radius: 15px;
+    /* padding: 5px 8px; */
+    flex-direction: column;
+    transition: 0.1s;
+}
+
+.nav-profile-option{
+    cursor: pointer;
+    background-color: rgb(30, 30, 30);
+    padding: 4px;
+    text-align: center;
+}
+.nav-profile-option:nth-last-of-type(2n){
+    background-color: rgb(15, 15, 15);
+}
+.nav-profile-option:hover{
+    background-color: rgb(0, 175, 93);
+}
+.nav-profile-options :is(:first-child){
+    border-radius: 12px 12px 0 0;
+}
+.nav-profile-options :is(:last-child){
+    border-radius: 0 0 12px 12px;
+}

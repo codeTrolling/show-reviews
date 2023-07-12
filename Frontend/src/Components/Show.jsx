@@ -147,7 +147,7 @@ const Show = () => {
                 <div className='flex minor-info-container'>
                     <div className='flex minor-info'>
                         <label className='text-styling info-category'>Genres:</label>
-                        <label className='text-styling minor-score-in-caregory'>{movie !== undefined && movie.genres.map((i, index) => i)}</label>
+                        <label className='text-styling minor-score-in-caregory'>{movie !== undefined && movie.genres.map((i, index) => index < movie.genres.length - 1 ? i + ", " : i )}</label>
                     </div>
                     <div className='flex minor-info'>
                         <label className='text-styling info-category'>Duration:</label>
@@ -164,8 +164,8 @@ const Show = () => {
                 </div>
 
                 <div className='flex additional-info-redirect-options-container'>
-                    <label className='text-styling additional-info-redirect-options'>Type: {movie !== undefined && movie.type}</label>
-                    <Link to={"/WriteReview/" + `${movie !== undefined && movie.id}`} className='text-styling additional-info-redirect-options'>Write review</Link>
+                    <Link to={"/AllShows/" + `${movie !== undefined && movie.type}`} className='text-styling additional-info-redirect-options'>Type: {movie !== undefined && movie.type}</Link>
+                    <Link to={"/WriteReview/" + `${movie !== undefined && movie.title}`} className='text-styling additional-info-redirect-options'>Write review</Link>
                     <label className='text-styling additional-info-redirect-options'>Read reviews</label>
                 </div>
 
