@@ -87,28 +87,34 @@ const AdminPageAddShow = () => {
        }, [castMemberImageStateChange])
 
 
-       const addShow = () => {
+       const addShow = async () => {
         let genres = formInputsRef.current[2].value.split(",");
         let mainCast = [];
+
         if(castMemberCharacterNameInputRef.current.length > 0){
             for(let i = 0; i < castMemberCharacterNameInputRef.current.length; i++){
-                var converttImageToBase64 = new FileReader();
-        converttImageToBase64.readAsDataURL(castMemberImageRef.current[i].files[0]);
-        converttImageToBase64.onload = () =>{
-            console.log(converttImageToBase64.result)
-                let temp = {
-                    "image": converttImageToBase64.result,
-                    "characterName": castMemberCharacterNameInputRef.current[i].value,
-                    "mainCharacter": castMemberIsMainCharacterRef.current[i].checked,
-                    "actorName": castMemberActorNameInputRef.current[i].value
+                const convertToB64 = () => {
+                    var converter = new FileReader();
+                    converter.readAsDataURL(castMemberImageRef.current[i].files[0]);
+                    return converter.onload = () => {
+                        let temp = {
+                            "image": converter.result,
+                            "characterName": castMemberCharacterNameInputRef.current[i].value,
+                            "mainCharacter": castMemberIsMainCharacterRef.current[i].checked,
+                            "actorName": castMemberActorNameInputRef.current[i].value
+                        }
+                        mainCast.push(temp)
+                    }
                 }
-                mainCast.push(temp);}
+                convertToB64();
             }
-        }
+            }
+       
 
         var convertImageToBase64 = new FileReader();
         convertImageToBase64.readAsDataURL(showImageRef.current.files[0]);
         convertImageToBase64.onload = () => {
+            console.log("I have loaded into the second one", mainCast)
             //console.log(convertImageToBase64.result)
         
 
@@ -142,7 +148,8 @@ const AdminPageAddShow = () => {
                 alert("Something went wrong: " + r.message)
             }
         })
-       }}
+       }//}
+    }
 
 
     return(
@@ -172,7 +179,6 @@ const AdminPageAddShow = () => {
             {
                 addCastButtonClicked.map((i, index) => {
                     return(
-                        <>
                         <div key={index} className="flex cast-members-container">
                             <label htmlFor={"character-name" + index} className="text-styling heading-text-styling">Character name:</label>
                             <input type="text" name={"character-name" + index} id={"character-name" + index} ref={e => castMemberCharacterNameInputRef.current[index] = e} className="text-styling cast-member-form-input"/>
@@ -188,7 +194,6 @@ const AdminPageAddShow = () => {
                                 <img src={castMemberImage[index]} alt="" ref={e => showCharacterImageIfPresentRef.current[index] = e} style={{height: "50px", maxWidth: "36px"}}/>
                             </div>
                         </div>
-                        </>
                     )
                 })
             }

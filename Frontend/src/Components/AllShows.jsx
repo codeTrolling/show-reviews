@@ -82,7 +82,7 @@ const AllShows = () => {
                 navigate("/AllShows/Top rated");
             }
         });
-    })
+    },[sortingFilter])
 
     return(
         <>
@@ -138,7 +138,7 @@ const AllShows = () => {
                                     </div>
                                 {/*</div>*/} </Link>
                                 <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{item.rating}</label></div>
-                                <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{item.reviews}</label></div>
+                                <div className='flex all-shows-show-not-title' style={{alignItems: "center", justifyContent: "center"}}><label className='text-styling'>{item.reviewsCount}</label></div>
                             </div>
                         )
                     })
