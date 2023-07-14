@@ -2,25 +2,38 @@ const express = require("express");
 const router = express.Router();
 const user = require("../models/user");
 
-router.get('/', (req, res) => {
-    res.send("hello")
+router.get('/', async (req, res) => {
+
+    res.json(await user.find())
+})
+
+router.post('/getUser', async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    if(getUser !== null){
+        res.status(200).json({"status": 200, "picture": getUser.image})
+    }
 })
 
 router.post('/register', async (req, res) => {
     const newUserEmail = await user.findOne({"email": {"$eq": req.body.email}})
     const newUserUsername = await user.findOne({"username": {"$eq": req.body.username}})
+    console.log(newUserUsername)
     if(newUserEmail === null && newUserUsername === null && req.body.password !== ""){
+        console.log("in the if")
         try{
-            let sessionI = generateSessionid(40)
-            let newUser = {
+            console.log("in the try")
+            let sessionI = await generateSessionid(30)
+            console.log("this is the problem")
+            let newUser = new user({
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
                 image: req.body.image !== null ? req.body.image : null,
                 isAdmin: false,
                 sessionId: sessionI
-            }
+            })
             const success = await newUser.save();
+            console.log("are we successful?")
             res.status(200).json({"status": 200, "sessionId" : sessionI});
         }
         catch (err){
@@ -47,7 +60,7 @@ router.patch('/login', async (req, res) => {
         res.status(400).json({"message": "Invalid credentials!"})
     }
     if(logUser.password === req.body.password){
-        let sessionId = generateSessionid(40);
+        let sessionId = generateSessionid(30);
         logUser.sessionId = sessionId;
         try{
             const updated = await logUser.save();
@@ -65,21 +78,25 @@ router.patch('/login', async (req, res) => {
     }
 })
 
+router.delete("/deleteUser", async (req, res) => {
+    const userToDelete = await user.findOne({"email": {"$eq": "a"}});
+    await userToDelete.deleteOne();
+})
+
 
 
 const generateSessionid = async (length) => {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?><';
     const charactersLength = characters.length;
-    let counter = 0;
     for (let i = 0;i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    if(await user.findOne({"sessionId": {"$eq": result}})){
+    if(await user.findOne({"sessionId": {"$eq": result}}) === null){
         return result;
     }
     else{
-        return generateSessionid(40);
+        return generateSessionid(30);
     }
 }
 

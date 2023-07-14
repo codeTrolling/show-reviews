@@ -1,5 +1,5 @@
 import '../Styles/multiUse.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import pic from "../Assets/instagramLogo.png";
 
@@ -13,6 +13,33 @@ const NavigationBar = () => {
     const [probableShows, setProbableShows] = useState([]);
     const userProfilePictureRef = useRef();
     const [profileMenu, setProfileMenu] = useState(false);
+    const [userProfilePictureFetched, setUserProfilePictureFetched] = useState(null);
+
+
+    //get user profile
+    useEffect(() => {
+        if(sessionStorage.getItem("sessionId") !== null){
+            fetch("http://localhost:5000/api/users/getUser", {
+                method: "POST",
+                headers: {"Content-type": "application/json"},
+                body: JSON.stringify({
+                    "sessionId": sessionStorage.getItem("sessionId")
+                })
+            }).then(r => {
+                return r.json();
+            }).then(r => {
+                if(r.status === 200){
+                    if(r.picture !== null){
+                        setUserProfilePictureFetched(r.picture);
+                    }
+                    else{
+                        setUserProfilePictureFetched("");
+                    }
+                }
+            })
+        }
+    }, [])
+
 
     const displayProbableShows = () => {
         if(searchShowRef.current.value !== ""){
@@ -78,11 +105,22 @@ const NavigationBar = () => {
         </div>
 
         <div className='flex nav-profile-options-container'>
-            <img src={pic} alt="" className='nav-profile-pic' onClick={() => setProfileMenu(!profileMenu)}/>
+            <img src={userProfilePictureFetched !== null ? `${userProfilePictureFetched !== "" ? userProfilePictureFetched : pic}` : pic} alt="" className='nav-profile-pic' onClick={() => setProfileMenu(!profileMenu)}/>
             <div className='flex nav-profile-options' style={{opacity: profileMenu ? "1" : "0", transform: profileMenu ? "translateY(0)" : "translateY(-10px)", pointerEvents: profileMenu ? "auto" : "none"}}>
-                <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
+                {
+                    userProfilePictureFetched !== null ? <>
+                        <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
+                        <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
+                        <label className='text-styling nav-profile-option'>Sign out</label>
+                        <label className='text-styling nav-profile-option' style={{color: "red"}}>Delete account</label>
+                    </> : <>
+                        <Link to="/login" className='text-styling nav-profile-option' style={{textDecoration: "none"}}>Sign in</Link>
+                        <Link to="/register" className='text-styling nav-profile-option' style={{textDecoration: "none"}}>Register</Link>
+                    </>
+                }
+                {/* <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
                 <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
-                <label className='text-styling nav-profile-option'>Sign out</label>
+                <label className='text-styling nav-profile-option'>Sign out</label> */}
             </div>
         </div>
     </div>
