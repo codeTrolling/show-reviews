@@ -38,7 +38,10 @@ const NavigationBar = () => {
                 }
             })
         }
-    }, [])
+        else{
+            setUserProfilePictureFetched(null)
+        }
+    })
 
 
     const displayProbableShows = () => {
@@ -108,15 +111,20 @@ const NavigationBar = () => {
             <img src={userProfilePictureFetched !== null ? `${userProfilePictureFetched !== "" ? userProfilePictureFetched : pic}` : pic} alt="" className='nav-profile-pic' onClick={() => setProfileMenu(!profileMenu)}/>
             <div className='flex nav-profile-options' style={{opacity: profileMenu ? "1" : "0", transform: profileMenu ? "translateY(0)" : "translateY(-10px)", pointerEvents: profileMenu ? "auto" : "none"}}>
                 {
-                    userProfilePictureFetched !== null ? <>
-                        <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
-                        <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
-                        <label className='text-styling nav-profile-option'>Sign out</label>
-                        <label className='text-styling nav-profile-option' style={{color: "red"}}>Delete account</label>
-                    </> : <>
-                        <Link to="/login" className='text-styling nav-profile-option' style={{textDecoration: "none"}}>Sign in</Link>
-                        <Link to="/register" className='text-styling nav-profile-option' style={{textDecoration: "none"}}>Register</Link>
-                    </>
+                    //profileMenuOptions.map((item, index) => {
+                        //console.log("in map", userProfilePictureFetched)
+                        //return(
+                        userProfilePictureFetched !== null ? <>
+                            <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
+                            <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
+                            <label className='text-styling nav-profile-option' onClick={() => {sessionStorage.removeItem("sessionId"); setProfileMenu(!profileMenu)}}>Sign out</label>
+                            <label className='text-styling nav-profile-option' style={{color: "red"}}>Delete account</label>
+                        </> : <>
+                            <Link to="/login" className='text-styling nav-profile-option' style={{textDecoration: "none"}} onClick={() => setProfileMenu(!profileMenu)}>Sign in</Link>
+                            <Link to="/register" className='text-styling nav-profile-option' style={{textDecoration: "none"}} onClick={() => setProfileMenu(!profileMenu)}>Register</Link>
+                        </>
+                        //)
+                    //})
                 }
                 {/* <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
                 <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>

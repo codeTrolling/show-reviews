@@ -55,12 +55,12 @@ router.post('/register', async (req, res) => {
 })
 
 router.patch('/login', async (req, res) => {
-    const logUser = await user.findOne({"$or": [{"email": {"$eq": req.body.email}}, {"username": {"$eq": req.body.username}}]});
+    const logUser = await user.findOne({"$or": [{"email": {"$eq": req.body.email}}, {"username": {"$eq": req.body.email}}]});
     if(logUser === null){
         res.status(400).json({"message": "Invalid credentials!"})
     }
     if(logUser.password === req.body.password){
-        let sessionId = generateSessionid(30);
+        let sessionId = await generateSessionid(30);
         logUser.sessionId = sessionId;
         try{
             const updated = await logUser.save();

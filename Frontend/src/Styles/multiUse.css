@@ -152,6 +152,7 @@ img{
     /* border: 1px solid rgb(0, 255, 136); */
     border-radius: 15px;
     /* padding: 5px 8px; */
+    width: 155px;
     flex-direction: column;
     transition: 0.1s;
 }
