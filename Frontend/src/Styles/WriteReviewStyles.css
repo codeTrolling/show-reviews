@@ -16,13 +16,14 @@
 
 .choose-show-button{
     margin-left: 5px;
-    min-width: 100px;
-    height: 25px;
+    width: 250px;
+    min-height: 25px;
     background-color: rgb(15, 15, 15);
     border: solid 2px rgb(0, 255, 136);
     border-radius: 7px;
     cursor: pointer;
     transition: 0.2s;
+    font-size: 1rem;
 }
 .choose-show-button:hover{
     background-color: rgb(45, 45, 45);
@@ -85,4 +86,18 @@
     background-color: rgb(15, 15, 15);
     border-radius: 0 0 10px 10px;
     transition: 0.1s;
+    align-self: normal;
+    width: 400px;
+}
+
+.write-review-probable-shows{
+    align-items: center;
+    cursor: pointer;
+    background-color: rgb(15, 15, 15);
+}
+.write-review-probable-shows:nth-last-of-type(2n){
+    background-color: rgb(30, 30, 30);
+}
+.write-review-probable-shows:hover{
+    background-color: rgb(0, 175, 93);
 }

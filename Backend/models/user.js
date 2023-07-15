@@ -25,6 +25,16 @@ const userSchema = new mongoose.Schema({
     sessionId:{
         type: String,
         require: false
+    },
+    likedReviews:{
+        type: Array,
+        require: true,
+        default: []
+    },
+    dislikedReviews:{
+        type: Array,
+        require: true,
+        default: []
     }
 })
 
