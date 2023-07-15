@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const user = require("../models/user");
+const reviews = require("../models/review");
 
 router.get('/', async (req, res) => {
 
@@ -83,6 +84,40 @@ router.delete("/deleteUser", async (req, res) => {
     await userToDelete.deleteOne();
 })
 
+router.post("/deleteUser", async (req, res) => {
+    const userToDelete = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    if(userToDelete === null){
+        res.status(400).json({"message": "Unsuccessful. Invalid user."});
+        return;
+    }
+    const userReviews = await reviews.find({"owner": {"$eq": userToDelete.email}});
+    if(userReviews !== null){
+        userReviews.forEach(item => {
+            removeReview(item)
+        });
+    }
+    const reviewLikesToRemove = await reviews.find({"_id": {"$in": userToDelete.likedReviews}});
+    if(reviewLikesToRemove !== null){
+        reviewLikesToRemove.forEach(item => {
+            removeLikes(item);
+        })
+    }
+    const reviewDislikesToRemove = await reviews.find({"_id": {"$in": userToDelete.dislikedReviews}})
+    if(reviewDislikesToRemove !== null){
+        reviewDislikesToRemove.forEach(item => {
+            removeDislikes(item);
+        })
+    }
+    try{
+        await userToDelete.deleteOne()
+        res.status(200).json({"status": 200})
+    }catch(err){
+        res.status(400).json({"message": err.message})
+    }
+})
+
+
+
 
 
 const generateSessionid = async (length) => {
@@ -99,5 +134,20 @@ const generateSessionid = async (length) => {
         return generateSessionid(30);
     }
 }
+
+
+const removeReview = async (reviewToRemove) => {
+    await reviewToRemove.deleteOne()
+}
+const removeLikes = async (likeToRemove) => {
+    likeToRemove.likes -= 1;
+    await likeToRemove.save();
+}
+const removeDislikes = async (dislikeToRemove) => {
+    dislikeToRemove.dislikes -= 1;
+    await dislikeToRemove.save();
+}
+
+
 
 module.exports = router;

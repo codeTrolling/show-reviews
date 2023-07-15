@@ -1,6 +1,5 @@
 my reviews page
 rated reviews page
-profile in navigation bar
 admin page edit
 
-authentication
+deleting a user should delete user related records (reviews, likes, dislikes, other users' likes etc.) currently only deals with reviews likes and dislikes
