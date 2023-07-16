@@ -1,8 +1,8 @@
 import '../Styles/multiUse.css';
 import '../Styles/WriteReviewStyles.css';
-import { useState, useRef} from 'react';
+import { useState, useRef, useEffect} from 'react';
 import jojo from '../Assets/JoJo_Part_1_Phantom_Blood.jpg';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const WriteReview = () => {
 
@@ -16,11 +16,19 @@ const WriteReview = () => {
     const textareaPlaceholder = "Write your review here!\n*If nothing is written here you will rate the show you have chosen without leaving a review!*"
     const [probableShows, setProbableShows] = useState([]);
 
+    const { show } = useParams();
+    useEffect(() => {
+        if(show !== undefined){
+            setChosenShow(show)
+        }
+    }, [])
+
+
     if(sessionStorage.getItem("sessionId") === null){
         return(<Navigate to="/login"/>)
     }
 
-    //TODO make searched shows appear as options 
+
     const displayProbableShows = () => {
         if(chooseShowSearchRef.current.value !== ""){
             console.log(chooseShowSearchRef.current.value)
