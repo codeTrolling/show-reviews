@@ -12,6 +12,7 @@ import NotFound from './Components/NotFound';
 import WriteReview from './Components/WriteReview';
 import RatedShows from './Components/RatedShows';
 import AdminPage from './Components/AdminPage';
+import MyReviews from './Components/MyReviews';
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
         <Route path='/WriteReview'>
           <Route index element={<WriteReview/>} />
           <Route path=':show' element={<WriteReview/>} />
+        </Route>
+        <Route path='/MyReviews'>
+          <Route index element={<MyReviews/>} />
+          <Route path=':page' element={<MyReviews/>} />
         </Route>
         <Route path='/RatedShows'>
           <Route index element={<RatedShows/>} />

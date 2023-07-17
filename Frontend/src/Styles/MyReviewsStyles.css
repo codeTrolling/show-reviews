@@ -1,0 +1,55 @@
+.my-reviews-search{
+    width: 300px;
+    border: 2px solid rgb(0, 255, 136);
+    border-radius: 8px;
+    text-indent: 4px;
+    height: 25px;
+    background-color: rgb(15, 15, 15);
+    font-size: 1.1rem;
+}
+.my-reviews-search:focus{
+    outline: none;
+}
+
+.my-reviews-probable-shows-container{
+    flex-direction: column;
+    position: absolute;
+    transition: 0.2s;
+    transform: translateY(31px);
+    width: 308px;
+    cursor: pointer;
+}
+
+.my-reviews-probable-show{
+    align-items: center;
+    background-color: rgb(15, 15, 15);
+}
+.my-reviews-probable-show:nth-of-type(2n){
+    background-color: rgb(30, 30, 30);
+}
+.my-reviews-probable-show:hover{
+    background-color: rgb(0, 175, 93);
+}
+
+.my-reviews-review-container{
+    flex-direction: column;
+    border: 3px solid rgb(0, 255, 136);
+    border-radius: 10px;
+    margin: 15px 0;
+    position: relative;
+    transition: 0.2s;
+    overflow: hidden;
+}
+
+.no-reviews-found{
+    color: rgb(0, 255, 136);
+    font-size: 2rem;
+    margin: 20px auto;
+}
+
+.my-reviews-review-information{
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(15, 15, 15);
+    border-radius: 10px 10px 0 0;
+}

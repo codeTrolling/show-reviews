@@ -48,5 +48,28 @@ router.post('/', async (req, res) => {
     }
 })
 
+// get user reviews
+router.post("/userReviews", async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    var reviewsToSend = "";
+    if(getUser === null){
+        res.status(400).json({"message": "Invalid user"});
+        return
+    }
+    if(req.body.title !== undefined){
+        reviewsToSend = await reviews.findOne({"owner": {"$eq": getUser.email}, "show": {"$eq": req.body.title}});
+        let temp = [];
+        temp.push(reviewsToSend);
+        res.status(200).json({"status": 200, "reviews": temp});
+        return;
+    }
+    var reviewsToSkip = (req.body.page - 1) * 10;
+    if(reviewsToSkip < 0){
+        reviewsToSkip = 0
+    }
+    reviewsToSend = await reviews.find({"owner": {"$eq": getUser.email}}).sort({"likes": 1}).skip(reviewsToSkip).limit(10);
+    res.status(200).json({"status": 200, "reviews": reviewsToSend});
+})
+
 
 module.exports = router;
