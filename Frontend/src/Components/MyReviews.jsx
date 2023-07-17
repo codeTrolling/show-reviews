@@ -169,7 +169,8 @@ const MyReviews = () => {
             </div>
 
             {
-                userReviews.length > 0 ? userReviews.map((item, index) => {
+                userReviews[0] !== null ? userReviews.map((item, index) => {
+                    console.log(userReviews)
                     return(
                         <div className="flex my-reviews-review-container" key={index} ref={e => reviewRef.current[index] = e} style={{height: "300px"}}>
                             <div className="flex my-reviews-review-information" ref={e => reviewInformationRef.current[index] = e}>
