@@ -139,7 +139,7 @@
     border-bottom: solid 2px rgb(15, 15, 15);
     align-items: center;
     margin: 5px 10px;
-    width: 100%;
+    /*width: 100%;*/
     height: 50px;
 }
 
@@ -184,14 +184,11 @@
     z-index: 1;
 }
 
-.dislike-review-button{
+.dislike-review-button-container{
     position: relative;
     margin-left: 30px;
     margin-right: 50px;
-    height: 15px;
-    width: 15px;
-    background-color: red;
-    cursor: pointer;
+    align-items: center;
 }
 /* .dislike-review-button-div{
     height: 15px;

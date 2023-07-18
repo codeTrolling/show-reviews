@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-// get user reviews
+// get user's reviews (MyReviews page)
 router.post("/userReviews", async (req, res) => {
     const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
     var reviewsToSend = "";
@@ -91,5 +91,71 @@ router.post("/deleteReview", async (req, res) => {
     res.status(200).json({"status": 200});
 })
 
+router.post("/showReviews", async (req, res) => {
+    if(req.body.page !== undefined){
+        let tempPage = (parseInt(req.body.page) - 1) * 10;
+        if(tempPage < 0){
+            tempPage = 0;
+        }
+        const fetchedReviews = await reviews.find({"show": {"$eq": req.body.title}}).skip(tempPage).limit(10);
+        let reviewsToSend = [];
+        fetchedReviews.forEach(item => {
+        reviewsToSend.push({
+            "_id": item._id,
+            "owner": item.owner,
+            "show": item.show,
+            "likes": item.likes,
+            "dislikes": item.dislikes,
+            "rating": item.rating,
+            "reviewContent": item.reviewContent,
+            "reviewDate": item.reviewDate
+        })
+    })
+        var counter = 0;
+        for(const item of reviewsToSend){
+            const changeReviewOwnerToUsername = async () => {
+                const changeOwner = await user.findOne({"email": {"$eq": item.owner}})
+                return [changeOwner.username, changeOwner.image];
+            }
+            let temp = await changeReviewOwnerToUsername()
+            reviewsToSend[counter].owner = temp[0];
+            reviewsToSend[counter].image = temp[1];
+            counter++;
+        }
+        res.status(200).json({"status": 200, "reviews": reviewsToSend})
+        return;
+    }
+
+    let tempPage = (parseInt(req.body.page) - 1) * 10;
+    if(tempPage < 0){
+        tempPage = 0;
+    }
+    const fetchedReviews = await reviews.find({"show": {"$eq": req.body.title}}).skip(tempPage).limit(3);
+    let reviewsToSend = [];
+    fetchedReviews.forEach(item => {
+        reviewsToSend.push({
+            "_id": item._id,
+            "owner": item.owner,
+            "show": item.show,
+            "likes": item.likes,
+            "dislikes": item.dislikes,
+            "rating": item.rating,
+            "reviewContent": item.reviewContent,
+            "reviewDate": item.reviewDate
+        })
+    })
+    var counter = 0;
+    for(const item of reviewsToSend){
+        const changeReviewOwnerToUsername = async () => {
+            const changeOwner = await user.findOne({"email": {"$eq": item.owner}})
+            return [changeOwner.username, changeOwner.image];
+        }
+        let temp = await changeReviewOwnerToUsername()
+        reviewsToSend[counter].owner = temp[0];
+        reviewsToSend[counter].image = temp[1];
+        counter++;
+    }
+    res.status(200).json({"status": 200, "reviews": reviewsToSend})
+})
 
 module.exports = router;

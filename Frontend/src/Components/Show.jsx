@@ -23,28 +23,28 @@ const Show = () => {
     //     "description": "d"
     // }
 
-    const reviewsToRender = [{
-        "writer-username": "Monkata",
-        "writer-image": jojo,
-        "rating": "7.32",
-        "likes": 312,
-        "dislikes": 15,
-        "review-text": "i do be reviewing"
-    }, {
-        "writer-username": "Ivan",
-        "writer-image": jojo,
-        "rating": "7.63",
-        "likes": 3,
-        "dislikes": 234236234,
-        "review-text": "im better"
-    }, {
-        "writer-username": "Tonkata",
-        "writer-image": jojo,
-        "rating": "9.21",
-        "likes": 285,
-        "dislikes": 25,
-        "review-text": "ireviewsing sikjdasmdm "
-    }]
+    // const reviewsToRender = [{
+    //     "writer-username": "Monkata",
+    //     "writer-image": jojo,
+    //     "rating": "7.32",
+    //     "likes": 312,
+    //     "dislikes": 15,
+    //     "review-text": "i do be reviewing"
+    // }, {
+    //     "writer-username": "Ivan",
+    //     "writer-image": jojo,
+    //     "rating": "7.63",
+    //     "likes": 3,
+    //     "dislikes": 234236234,
+    //     "review-text": "im better"
+    // }, {
+    //     "writer-username": "Tonkata",
+    //     "writer-image": jojo,
+    //     "rating": "9.21",
+    //     "likes": 285,
+    //     "dislikes": 25,
+    //     "review-text": "ireviewsing sikjdasmdm "
+    // }]
     const [reviews, setReviews] = useState([]);
     const changeReviewBoxButtonState= useRef([]);
     const reviewsRef = useRef([]);
@@ -53,6 +53,7 @@ const Show = () => {
     const showImageContainerRef = useRef();
     const [movie, setMovie] = useState();
     const [redirect, setRedirect] = useState(false);
+    const [reviewsToRender, setReviewsToRender] = useState();
 
     const { show } = useParams();
 
@@ -67,6 +68,24 @@ const Show = () => {
             setRedirect(true)
         }
     })
+    }, [])
+
+
+    // get reviews for this page
+    useEffect(() => {
+        fetch("http://localhost:5000/api/reviews/showReviews", {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                "title": show
+            })
+        }).then(r => {
+            return r.json();
+        }).then(r => {
+            if(r.status === 200){
+                setReviewsToRender(r.reviews);
+            }
+        })
     }, [])
     // fetch("http://localhost:5000/api/shows/getShow/" + show.toString()).then(r => {
     //     return r.json()
@@ -177,7 +196,7 @@ const Show = () => {
                 </div>
 
                 <div className='flex description-heading'> <label className='text-styling heading-text-styling'>Reviews:</label></div>
-                    <div className='flex show-review-container'>
+                    {/* <div className='flex show-review-container'>
                         <div className='flex review-writer'>
                             <img src={jojo} alt="" className='review-writer-image'/>
                             <label className='text-styling review-writer-username'>This is my name</label>
@@ -186,7 +205,7 @@ const Show = () => {
                         </div>
                         <p className='text-styling review-text'>{"This is my favorite series ever, and it finally got a real weekly anime adaptation after 25 years—the ‘94 and ‘00 OVAs and the Phantom Blood movie, which never saw DVD/home video release do not count—there is definitely some bias in this review. That said, there’s a reason I still didn’t give it a perfect score, and it’s because I’m still trying to keep a hint of objectivity in here.\n\nArt - 8/10\n\nI suppose I’ll start off with how it adapted the source material. Unlike the OVAs and Phantom Blood movie, there were no cuts in content, and it actually adapted parts 1 and 2 of the manga: Phantom Blood and Battle Tendency. The studio, David Production, did what I would consider a masterful job in terms of bringing out Araki Hirohiko’s style into the manga. He is an artist, and you can see his art evolve throughout the long-running JoJo’s Bizarre Adventure franchise. DP hired multiple art directors and tried to incorporate the different faces and builds in body throughout the series. Also, because there is no such thing as “canon” colors for characters, DP, in an unexpected but very innovative manner, used their poor budget to their advantage—by changing color schemes and using colorful abstract backgrounds during monologues and still-frames. I’ll give the art by itself a 10/10, even though sometimes Jonathan and Joseph, the titular JoJos in this series, suffer from Gorilla Face Syndrome, since the BD/DVDs are doing a great job of fixing it."}</p>
                         <div className='flex more-or-less-btn-container'><button className='text-styling more-or-less-btn'>Read more</button></div>
-                    </div>
+                    </div> */}
                     
                     {/* {
                         reviewsToRender.map((item, index) => {
@@ -213,7 +232,8 @@ const Show = () => {
                         })
                     } */}
 
-                    <Review reviewsToRender={reviewsToRender} howRightToGo={showImageContainerRef}></Review>
+                    { reviewsToRender !== undefined ? <Review reviewsToRender={reviewsToRender}></Review> : <p className='text-styling' style={{margin: "15px auto"}}>There are no reviews yet. Be the first person to submit one!</p>}
+                    {/* <Review reviewsToRender={reviewsToRender} howRightToGo={showImageContainerRef}></Review> */}
 
             </div>
         </div>
