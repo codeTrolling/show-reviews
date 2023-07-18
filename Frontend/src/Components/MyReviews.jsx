@@ -15,6 +15,8 @@ const MyReviews = () => {
     //
     const moreOrLessButtonRef = useRef([]);
     const [removeButtonsIfNeeded, setRemoveButtonsIfNeeded] = useState(false);
+    const [reviewToDelete, setReviewToDelete] = useState();
+    const [modalWindow, setModalWindow] = useState(false)
 
 
     // get user reviews
@@ -146,8 +148,29 @@ const MyReviews = () => {
         }
     }
 
+    const deleteReview = () => {
+        fetch("http://localhost:5000/api/reviews/deleteReview", {
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                "sessionId": sessionStorage.getItem("sessionId"),
+                "reviewId": reviewToDelete
+            })
+        }).then(r => {
+            return r.json();
+        }).then(r => {
+            if(r.status !== 200){
+                alert(r.message);
+            }
+        })
+    }
 
     return(
+        <>
+        <div className='flex modal-window' style={{opacity: modalWindow ? "1" : "0", pointerEvents: modalWindow ? "auto" : "none"}} onClick={() => setModalWindow(!modalWindow)}>
+        <label className='text-styling heading-text-styling'>Are you sure you want to delete this review? You cannot revert this action</label>
+        <button className='submit-btn text-styling' style={{backgroundColor: "red"}} onClick={deleteReview}>Delete</button>
+        </div>
         <div className="flex rated-shows-viewport">
             <div className="flex" style={{marginTop: "15px"}}>
                 <label htmlFor="search-for-reviews" className="text-styling heading-text-styling" style={{alignSelf: "center"}}>Show (leaving this empty will show all reviews):</label>
@@ -179,7 +202,7 @@ const MyReviews = () => {
                                 <label className="text-styling">{"Likes: " + item.likes.toString()}</label>
                                 <label className="text-styling">{"Dislikes: " + item.dislikes.toString()}</label>
                                 <label className="text-styling">{"Date: " + new Date(item.reviewDate).toLocaleDateString()}</label>
-                                <div style={{width: "50px", height: "50px", backgroundColor: "red"}}></div>
+                                <div style={{width: "50px", height: "50px", backgroundColor: "red"}} onClick={() => {setModalWindow(!modalWindow); setReviewToDelete(item._id)}}></div>
                             </div>
                             <p className="text-styling review-text" ref={e => reviewContentRef.current[index] = e}>{item.reviewContent !== undefined && item.reviewContent}</p>
                             <div className='flex more-or-less-btn-container' style={{borderRadius: "0 0 10px 10px"}}><button onClick={() => changeReviewBoxSize(index)} className='text-styling more-or-less-btn' ref={e => moreOrLessButtonRef.current[index] = e}>Read more</button></div>
@@ -201,6 +224,7 @@ const MyReviews = () => {
                 <Link to={"/MyReviews/" + (userReviews.length >= 10 ? (parseInt(page) + 1).toString() : page)} className="text-styling">Next page</Link> */}
             </div>
         </div>
+        </>
     )
 }
 

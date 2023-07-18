@@ -71,5 +71,25 @@ router.post("/userReviews", async (req, res) => {
     res.status(200).json({"status": 200, "reviews": reviewsToSend});
 })
 
+// delete review
+router.post("/deleteReview", async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    const reviewToDelete = await reviews.findOne({"_id": {"$eq": req.body.reviewId}});
+    if(getUser === null){
+        res.status(400).json({"status": 400, "message": "Invalid user"});
+        return;
+    }
+    if(reviewToDelete === null){
+        res.status(400).json({"message": "Review not found"});
+        return;
+    }
+    if(reviewToDelete.owner !== getUser.email){
+        res.status(400).json({"status": 400, "message": "Invalid user"});
+        return;
+    }
+    await reviewToDelete.deleteOne();
+    res.status(200).json({"status": 200});
+})
+
 
 module.exports = router;
