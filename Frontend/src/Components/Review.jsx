@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import pic from "../Assets/instagramLogo.png";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const Review = ( {reviewsToRender, howRightToGo} ) => {
 
@@ -17,6 +18,12 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
     const dislikeButtonRef = useRef([]);
     const likeButtonWindowPopUpRef = useRef();
     const dislikeButtonWindowPopUpRef = useRef();
+    const { page=1 } = useParams();
+    const [history, setHistory] = useState();
+    if(page !== history){
+        setHistory(page);
+    }
+    //const url = window.location.pathname.split('/').pop();
 
 
     const changeReviewBoxSize = (index) => {
@@ -48,11 +55,17 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
                 reviewsRef.current[index].style.height = "300px"
             }
         }
+        const forLoopFunc = () => {
+            for(let i = 0; i < reviewsToRender.length; i++){
+                testNoName(i)
+            }
+        }
 
+        forLoopFunc()
         reviewsToRender.map((item, index) => {
             testNoName(index);
         })
-    },[])
+    }, [history])
 
     useEffect(() => {
         // responsible for bringing the like pop up window to the correct like button

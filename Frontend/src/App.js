@@ -13,6 +13,7 @@ import WriteReview from './Components/WriteReview';
 import RatedShows from './Components/RatedShows';
 import AdminPage from './Components/AdminPage';
 import MyReviews from './Components/MyReviews';
+import ShowReviews from './Components/ShowReviews';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path=':filter' element={<AllShows/>} />
         </Route>
         <Route path='/Show/:show' element={<Show/>} />
+        <Route path='/Show/:show/reviews/:page' element={<ShowReviews/>} />
         <Route path='/Login' element={<><LoginRegisterBackground/><Login/></>} />
         <Route path='/Register' element={<><LoginRegisterBackground/><Register/></>} />
         <Route path='/WriteReview'>

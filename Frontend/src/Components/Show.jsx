@@ -185,7 +185,7 @@ const Show = () => {
                 <div className='flex additional-info-redirect-options-container'>
                     <Link to={"/AllShows/" + `${movie !== undefined && movie.type}`} className='text-styling additional-info-redirect-options'>Type: {movie !== undefined && movie.type}</Link>
                     <Link to={"/WriteReview/" + `${movie !== undefined && movie.title}`} className='text-styling additional-info-redirect-options'>Write review</Link>
-                    <label className='text-styling additional-info-redirect-options'>Read reviews</label>
+                    <Link to={"/Show/" + show + "/reviews/1"} className='text-styling additional-info-redirect-options'>Read reviews</Link>
                 </div>
 
                 <div className='flex' style={{flexDirection: "column", borderTop: "solid 2px rgb(15, 15, 15)", marginTop: "13px", paddingTop: "2px"}}>
