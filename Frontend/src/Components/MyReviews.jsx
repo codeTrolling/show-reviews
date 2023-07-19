@@ -193,7 +193,6 @@ const MyReviews = () => {
 
             {
                 userReviews[0] !== null ? userReviews.map((item, index) => {
-                    console.log(userReviews)
                     return(
                         <div className="flex my-reviews-review-container" key={index} ref={e => reviewRef.current[index] = e} style={{height: "300px"}}>
                             <div className="flex my-reviews-review-information" ref={e => reviewInformationRef.current[index] = e}>
@@ -215,10 +214,10 @@ const MyReviews = () => {
 
             <div className="flex" style={{margin: "0 auto"}}>
                 {
-                    parseInt(page) - 1 >= 1 && <Link to={"/MyReviews/" + (parseInt(page) - 1).toString()} className="text-styling" style={{marginRight: "50px"}}>Previous page</Link>
+                    parseInt(page) - 1 >= 1 && <a href={"/MyReviews/" + (parseInt(page) - 1).toString()} className="text-styling" style={{marginRight: "50px"}}>Previous page</a>
                 }
                 {
-                    userReviews.length >= 10 && <Link to={"/MyReviews/" + (parseInt(page) + 1).toString()} className="text-styling">Next page</Link>
+                    userReviews.length >= 10 && <a href={"/MyReviews/" + (parseInt(page) + 1).toString()} className="text-styling">Next page</a>
                 }
                 {/* <Link to={"/MyReviews/" + (parseInt(page) - 1 >= 1 ? (parseInt(page) - 1).toString() : "1")} className="text-styling">Previous page</Link>
                 <Link to={"/MyReviews/" + (userReviews.length >= 10 ? (parseInt(page) + 1).toString() : page)} className="text-styling">Next page</Link> */}

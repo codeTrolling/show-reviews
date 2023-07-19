@@ -44,7 +44,6 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
         // remove "read more" buttons if the review isn't big enough to need them. also change review box size to only fit the review if needed.
         const testNoName = (index) => {
             if(reviewsRef.current[index].children[2] !== undefined && reviewsRef.current[index].offsetHeight > howBigIsTheReviewersProfile.current[index].offsetHeight + howLongIsTheReviewRef.current[index].offsetHeight + 50){
-                //reviewsRef.current[index].children[2].remove();
                 changeReviewBoxButtonState.current[index].style.display = "none";
                 changeReviewBoxButtonState.current[index].style.pointerEvents = "none";
                 reviewsRef.current[index].style.height = howBigIsTheReviewersProfile.current[index].offsetHeight + howLongIsTheReviewRef.current[index].offsetHeight + 50 + "px";
@@ -55,13 +54,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
                 reviewsRef.current[index].style.height = "300px"
             }
         }
-        const forLoopFunc = () => {
-            for(let i = 0; i < reviewsToRender.length; i++){
-                testNoName(i)
-            }
-        }
 
-        forLoopFunc()
         reviewsToRender.map((item, index) => {
             testNoName(index);
         })

@@ -6,7 +6,7 @@ const ShowReviews = () => {
     const [movie, setMovie] = useState();
     const { show } = useParams();
     const [redirect, setRedirect] = useState(false);
-    const [reviewsToRender, setReviewsToRender] = useState();
+    const [reviewsToRender, setReviewsToRender] = useState(undefined);
     const { page = 1 } = useParams();
 
     useEffect(() => {
@@ -23,6 +23,7 @@ const ShowReviews = () => {
     }, [])
 
     useEffect(() => {
+        console.log("setting reviews: ", reviewsToRender)
         fetch("http://localhost:5000/api/reviews/showReviews", {
             method: "POST",
             headers: {"Content-type": "application/json"},
@@ -37,7 +38,7 @@ const ShowReviews = () => {
                 setReviewsToRender(r.reviews);
             }
         })
-    })
+    }, [page])
 
 
     return (
@@ -67,10 +68,10 @@ const ShowReviews = () => {
 
                 <div className="flex" style={{margin: "0 auto"}}>
                 {
-                    parseInt(page) - 1 >= 1 && <Link to={"/Show/" + show + "/reviews/" + (parseInt(page) - 1).toString()} className="text-styling" style={{marginRight: "50px"}}>Previous page</Link>
+                    parseInt(page) - 1 >= 1 && <a href={"/Show/" + show + "/reviews/" + (parseInt(page) - 1).toString()} className="text-styling" style={{marginRight: "50px"}}>Previous page</a>
                 }
                 {
-                    reviewsToRender !== undefined && reviewsToRender.length >= 10 && <Link to={"/Show/" + show + "/reviews/" + (parseInt(page) + 1).toString()} className="text-styling">Next page</Link>
+                    reviewsToRender !== undefined && reviewsToRender.length >= 10 && <a href={"/Show/" + show + "/reviews/" + (parseInt(page) + 1).toString()} className="text-styling">Next page</a>
                 }
                 {/* <Link to={"/MyReviews/" + (parseInt(page) - 1 >= 1 ? (parseInt(page) - 1).toString() : "1")} className="text-styling">Previous page</Link>
                 <Link to={"/MyReviews/" + (userReviews.length >= 10 ? (parseInt(page) + 1).toString() : page)} className="text-styling">Next page</Link> */}
