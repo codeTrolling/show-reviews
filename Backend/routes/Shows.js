@@ -53,6 +53,12 @@ router.get("/getShow/:show", async (req, res) => {
     }
 })
 
+router.get("/randomizedShows", async (req, res) => {
+    const showsToSend = await show.aggregate([{"$sample": {"size": 5}}])
+
+    res.status(200).json({"status": 200, "shows": showsToSend})
+})
+
 router.get("/AllShows/:filter", async (req, res) => {
     var shows;
     if(req.params.filter === "Top rated"){

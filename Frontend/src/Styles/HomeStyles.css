@@ -25,22 +25,6 @@ img{
     transition: transform 0.2s, opacity 0.1s, height 0.1s, width 0.1s;
 }
 
-/* .hidden-left-image{
-    transform: translateX(-1140px);
-    width: 200px;
-    height: 340px;
-    opacity: 0;
-    transition: 0.2s;
-}
-
-.hidden-right-image{
-    width: 200px;
-    height: 340px;
-    opacity: 0;
-    margin-left: 5px;
-    transition: 0.2s;
-} */
-
 .change-image-btn{
     position: absolute;
     width: 20px;
@@ -115,7 +99,7 @@ img{
 .description{
     margin: 0;
     padding: 5px;
-    /*-webkit-user-modify: read-write-plaintext-only;*/
+    white-space: break-spaces;
 }
 .description:focus{
     outline: none;
