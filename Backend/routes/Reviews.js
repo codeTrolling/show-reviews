@@ -92,6 +92,9 @@ router.post("/deleteReview", async (req, res) => {
 })
 
 router.post("/showReviews", async (req, res) => {
+    var userLikedReviews = [];
+    var userDislikedReviews = [];
+    var getUser;
     if(req.body.page !== undefined){
         let tempPage = (parseInt(req.body.page) - 1) * 10;
         if(tempPage < 0){
@@ -111,6 +114,9 @@ router.post("/showReviews", async (req, res) => {
             "reviewDate": item.reviewDate
         })
     })
+        if(req.body.sessionId !== undefined && req.body.sessionId !== null){
+            getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+        }
         var counter = 0;
         for(const item of reviewsToSend){
             const changeReviewOwnerToUsername = async () => {
@@ -120,9 +126,18 @@ router.post("/showReviews", async (req, res) => {
             let temp = await changeReviewOwnerToUsername()
             reviewsToSend[counter].owner = temp[0];
             reviewsToSend[counter].image = temp[1];
+
+            if(getUser !== undefined && getUser !== null){
+                if(getUser.likedReviews.includes(item._id)){
+                    userLikedReviews.push(item._id);
+                }
+                else if(getUser.dislikedReviews.includes(item._id)){
+                    userDislikedReviews.push(item._id);
+                }
+            }
             counter++;
         }
-        res.status(200).json({"status": 200, "reviews": reviewsToSend})
+        res.status(200).json({"status": 200, "reviews": reviewsToSend, "likedReviews": userLikedReviews, "dislikedReviews": userDislikedReviews});
         return;
     }
 
@@ -144,6 +159,10 @@ router.post("/showReviews", async (req, res) => {
             "reviewDate": item.reviewDate
         })
     })
+
+    if(req.body.sessionId !== undefined && req.body.sessionId !== null){
+        getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    }
     var counter = 0;
     for(const item of reviewsToSend){
         const changeReviewOwnerToUsername = async () => {
@@ -153,9 +172,78 @@ router.post("/showReviews", async (req, res) => {
         let temp = await changeReviewOwnerToUsername()
         reviewsToSend[counter].owner = temp[0];
         reviewsToSend[counter].image = temp[1];
+
+        if(getUser !== undefined && getUser !== null){
+            if(getUser.likedReviews.includes(item._id)){
+                userLikedReviews.push(item._id);
+            }
+            else if(getUser.dislikedReviews.includes(item._id)){
+                userDislikedReviews.push(item._id);
+            }
+        }
         counter++;
     }
-    res.status(200).json({"status": 200, "reviews": reviewsToSend})
+    res.status(200).json({"status": 200, "reviews": reviewsToSend, "likedReviews": userLikedReviews, "dislikedReviews": userDislikedReviews})
+})
+
+router.patch("/likeReview", async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    if(getUser === null){
+        return;
+    }
+    const getReview = await reviews.findOne({"_id": {"$eq": req.body.reviewId}});
+    if(getReview === null){
+        return;
+    }
+    if(getUser.likedReviews.includes(getReview._id)){
+        let tempIndex = getUser.likedReviews.indexOf(getReview._id);
+        getUser.likedReviews.splice(tempIndex, 1);
+        getReview.likes -= 1;
+        await getUser.save();
+        await getReview.save();
+    }
+    else{
+        if(getUser.dislikedReviews.includes(getReview._id)){
+            let tempIndex = getUser.dislikedReviews.indexOf(getReview._id);
+            getUser.dislikedReviews.splice(tempIndex, 1);
+            getReview.dislikes -= 1;
+        }
+        getUser.likedReviews.push(getReview._id);
+        getReview.likes += 1;
+        await getUser.save();
+        await getReview.save();
+    }
+    res.status(200)
+})
+
+router.patch("/dislikeReview", async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    if(getUser === null){
+        return;
+    }
+    const getReview = await reviews.findOne({"_id": {"$eq": req.body.reviewId}})
+    if(getReview === null){
+        return;
+    }
+    if(getUser.dislikedReviews.includes(getReview._id)){
+        let tempIndex = getUser.dislikedReviews.indexOf(getReview._id);
+        getUser.dislikedReviews.splice(tempIndex, 1);
+        getReview.dislikes -= 1;
+        await getUser.save();
+        await getReview.save();
+    }
+    else{
+        if(getUser.likedReviews.includes(getReview._id)){
+            let tempIndex = getUser.likedReviews.indexOf(getReview._id);
+            getUser.likedReviews.splice(tempIndex, 1);
+            getReview.likes -= 1;
+        }
+        getUser.dislikedReviews.push(getReview._id);
+        getReview.dislikes += 1;
+        await getUser.save();
+        await getReview.save();
+    }
+    res.status(200)
 })
 
 module.exports = router;

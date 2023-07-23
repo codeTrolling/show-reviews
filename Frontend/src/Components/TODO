@@ -1,5 +1,6 @@
 rated reviews page
 admin page edit
-fix pages bug
+method to update shows's rating and reviewCount
+hash passwords and possibly use jwt instead of sessionid
 
 deleting a user should delete user related records (reviews, likes, dislikes, other users' likes etc.) currently only deals with reviews likes and dislikes

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import pic from "../Assets/instagramLogo.png";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-const Review = ( {reviewsToRender, howRightToGo} ) => {
+const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
 
     //TODO maybe rewrite the code to use states instead of refs
     const [reviews, setReviews] = useState([]); // i think this is useless currently and could easily be remade
@@ -23,6 +23,7 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
     if(page !== history){
         setHistory(page);
     }
+    const navigate = useNavigate();
     //const url = window.location.pathname.split('/').pop();
 
 
@@ -86,6 +87,76 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
         ifFuncInEffect();
     }, [dislikeButtonPopUpWindow])
 
+    //called when a user clicks the like button on a review
+    const userLikesReview = (index) => {
+        if(sessionStorage.getItem("sessionId") === null){
+            navigate("/login");
+            return;
+        }
+        if(likedReviews.includes(reviewsToRender[index]._id)){
+            let tempIndex = likedReviews.indexOf(reviewsToRender[index]._id);
+            likedReviews.splice(tempIndex, 1);
+            reviewsToRender[index].likes -= 1;
+        }
+        else{
+            if(dislikedReviews.includes(reviewsToRender[index]._id)){
+                let tempIndex = dislikedReviews.indexOf(reviewsToRender[index]._id);
+                dislikedReviews.splice(tempIndex, 1)
+                reviewsToRender[index].dislikes -= 1;
+            }
+            likedReviews.push(reviewsToRender[index]._id)
+            reviewsToRender[index].likes += 1;
+        }
+        fetch("http://localhost:5000/api/reviews/likeReview", {
+            method: "PATCH",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                "sessionId": sessionStorage.getItem("sessionId"),
+                "reviewId": reviewsToRender[index]._id
+            })
+        }).then(r => {
+            return r.json()
+        }).then(r => {
+            if(r.message !== undefined){
+                alert(r.message);
+            }
+        })
+    }
+    const userDislikesReview = (index) => {
+        if(sessionStorage.getItem("sessionId") === null){
+            navigate("/login");
+            return;
+        }
+        if(dislikedReviews.includes(reviewsToRender[index]._id)){
+            let tempIndex = dislikedReviews.indexOf(reviewsToRender[index]._id);
+            dislikedReviews.splice(tempIndex, 1);
+            reviewsToRender[index].dislikes -= 1;
+        }
+        else{
+            if(likedReviews.includes(reviewsToRender[index]._id)){
+                let tempIndex = likedReviews.indexOf(reviewsToRender[index]._id);
+                likedReviews.splice(tempIndex, 1)
+                reviewsToRender[index].likes -= 1;
+            }
+            dislikedReviews.push(reviewsToRender[index]._id)
+            reviewsToRender[index].dislikes += 1;
+        }
+        fetch("http://localhost:5000/api/reviews/dislikeReview", {
+            method: "PATCH",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                "sessionId": sessionStorage.getItem("sessionId"),
+                "reviewId": reviewsToRender[index]._id
+            })
+        }).then(r => {
+            return r.json()
+        }).then(r => {
+            if(r.message !== undefined){
+                alert(r.message);
+            }
+        })
+    }
+
     return(
         <>
                     <label className="text-styling like-pop-up-window" ref={likeButtonWindowPopUpRef} style={{opacity: `${likeButtonPopUpWindow[0] ? "1" : "0"}`, top: `${likeTopAndLeft[0] !== undefined ? likeTopAndLeft[0] : "0"}`, left: `${likeTopAndLeft[1] !== undefined ? likeTopAndLeft[1] : "0"}`,transitionDelay: `${ likeButtonPopUpWindow[0] ? "0.5s" : "0s"}`}}>Like</label>
@@ -100,9 +171,9 @@ const Review = ( {reviewsToRender, howRightToGo} ) => {
                                 <label className='text-styling review-writer-username'>{item.owner}</label>
                                 <label className='text-styling review-writer-rating'>{"Rating: " + item.rating + "/10"}</label>
                                 <label className="text-styling" style={{marginLeft: "20px"}}>{new Date(item.reviewDate).toLocaleDateString()}</label>
-                                <div className='like-review-button' ref={e => likeButtonRef.current[index] = e} onMouseOver={() => {setLikeButtonPopUpWindow([true, index])}} onMouseOut={() => {setLikeButtonPopUpWindow([false, index])}}></div>
+                                <div className='like-review-button' ref={e => likeButtonRef.current[index] = e} onMouseOver={() => {setLikeButtonPopUpWindow([true, index])}} onMouseOut={() => {setLikeButtonPopUpWindow([false, index])}} onClick={() => userLikesReview(index)} style={{backgroundColor: likedReviews.includes(item._id) ? "lightgreen" : "green"}}></div>
                                 <label className="text-styling">{item.likes}</label>
-                                <div className='flex dislike-review-button-container' ref={e => dislikeButtonRef.current[index] = e} onMouseOver={() => {setDislikeButtonPopUpWindow([true, index])}} onMouseOut={() => {setDislikeButtonPopUpWindow([false, index])}}><div style={{width: "15px", height: "15px", backgroundColor: "red"}}></div><label className="text-styling">{item.dislikes}</label></div>
+                                <div className='flex dislike-review-button-container' ref={e => dislikeButtonRef.current[index] = e} onMouseOver={() => {setDislikeButtonPopUpWindow([true, index])}} onMouseOut={() => {setDislikeButtonPopUpWindow([false, index])}}><div style={{width: "15px", height: "15px", backgroundColor: dislikedReviews.includes(item._id) ? "red" : "brown"}} onClick={() => userDislikesReview(index)}></div><label className="text-styling">{item.dislikes}</label></div>
                             </div>
                             <p className='text-styling review-text' ref={e => howLongIsTheReviewRef.current[index] = e}>{item.reviewContent}</p>
                             <div className='flex more-or-less-btn-container'><button ref={e => changeReviewBoxButtonState.current[index] = e} onClick={() => changeReviewBoxSize(index)} className='text-styling more-or-less-btn'>Read more</button></div>

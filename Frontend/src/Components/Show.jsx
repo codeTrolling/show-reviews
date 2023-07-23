@@ -54,6 +54,8 @@ const Show = () => {
     const [movie, setMovie] = useState();
     const [redirect, setRedirect] = useState(false);
     const [reviewsToRender, setReviewsToRender] = useState();
+    const [likedReviews, setLikedReviews] = useState();
+    const [dislikedReviews, setDislikedReviews] = useState();
 
     const { show } = useParams();
 
@@ -77,13 +79,16 @@ const Show = () => {
             method: "POST",
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({
-                "title": show
+                "title": show,
+                "sessionId": sessionStorage.getItem("sessionId")
             })
         }).then(r => {
             return r.json();
         }).then(r => {
             if(r.status === 200){
                 setReviewsToRender(r.reviews);
+                setLikedReviews(r.likedReviews);
+                setDislikedReviews(r.dislikedReviews);
             }
         })
     }, [])
@@ -232,7 +237,7 @@ const Show = () => {
                         })
                     } */}
 
-                    { reviewsToRender !== undefined ? <Review reviewsToRender={reviewsToRender}></Review> : <p className='text-styling' style={{margin: "15px auto"}}>There are no reviews yet. Be the first person to submit one!</p>}
+                    { reviewsToRender !== undefined ? <Review reviewsToRender={reviewsToRender} likedReviews={likedReviews} dislikedReviews={dislikedReviews}></Review> : <p className='text-styling' style={{margin: "15px auto"}}>There are no reviews yet. Be the first person to submit one!</p>}
                     {/* <Review reviewsToRender={reviewsToRender} howRightToGo={showImageContainerRef}></Review> */}
 
             </div>
