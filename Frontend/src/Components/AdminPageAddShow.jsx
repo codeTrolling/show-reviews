@@ -127,6 +127,7 @@ const AdminPageAddShow = () => {
             method: "POST",
             headers: {"Content-type" : "application/json"},
             body: JSON.stringify({
+                "sessionId": sessionStorage.getItem("sessionId"),
                 "image": convertImageToBase64.result,
                 "title": formInputsRef.current[0].value,
                 "type": formInputsRef.current[1].value,

@@ -18,7 +18,11 @@ const AdminPageDeleteShow = () => {
     }
     const deleteShow = () => {
         fetch("http://localhost:5000/api/shows/" + inputRef.current.value.toString(), {
-            method: "DELETE"
+            method: "POST",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                "sessionId": sessionStorage.getItem("sessionId")
+            })
         }).then(r => {
             return r.json()
         }).then(r => {

@@ -3,6 +3,7 @@ const router = express.Router();
 const show = require("../models/show");
 const fs = require("fs");
 const path = require("path");
+const user = require("../models/user");
 
 // const multer = require("multer");
 // var imageFileName = "";
@@ -106,6 +107,11 @@ router.post('/', async (req, res) => {
     //     const buffer = Buffer.from(element.image, "utf-8");
     //     element.image = buffer;
     // });
+    const getUser = await user.findOne({sessionId: {"$eq": req.body.sessionId}});
+    if(getUser === null || !getUser.isAdmin){
+        res.status(200);
+        return;
+    }
     const showToAdd = new show({
         image: req.body.image,
         title: req.body.title,
@@ -136,9 +142,13 @@ router.post("/search", async (req, res) => {
     }
 })
 
-router.delete("/:title", async (req, res) => {
-    const showToDelete = await show.findOne({title: {"$eq": req.params.title}})
-    //const showToDelete = await show.findById(req.params.title);
+router.post("/:title", async (req, res) => {
+    const showToDelete = await show.findOne({title: {"$eq": req.params.title}});
+    const getUser = await user.findOne({sessionId: {"$eq": req.body.sessionId}});
+    if(getUser === null || !getUser.isAdmin){
+        res.status(200);
+        return;
+    }
     try{
         await showToDelete.deleteOne();
         let temp = { "status" : "200"};

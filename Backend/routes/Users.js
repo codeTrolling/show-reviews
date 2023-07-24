@@ -15,6 +15,16 @@ router.post('/getUser', async (req, res) => {
     }
 })
 
+router.post('/checkAdmin', async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    if(getUser !== null && getUser.isAdmin){
+        res.status(200)
+    }
+    else{
+        res.status(200).json({"redirect": true})
+    }
+})
+
 router.post('/register', async (req, res) => {
     const newUserEmail = await user.findOne({"email": {"$eq": req.body.email}})
     const newUserUsername = await user.findOne({"username": {"$eq": req.body.username}})

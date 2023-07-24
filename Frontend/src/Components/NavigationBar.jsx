@@ -132,10 +132,10 @@ const NavigationBar = () => {
             {
                 probableShows.map((item, index) => {
                     return(
-                        <Link key={index} to={"/Show/" + item.title} className='nav-search-show-probable-shows flex' onClick={() => setProbableShows([])}>
+                        <a key={index} href={"/Show/" + item.title} className='nav-search-show-probable-shows flex' onClick={() => setProbableShows([])}>
                             <img src={item.image} alt="" className='probable-show-image'/>
                             <label className='text-styling heading-text-styling' style={{cursor: "pointer"}}>{item.title}</label>
-                        </Link>
+                        </a>
                     )
                 })
             }
