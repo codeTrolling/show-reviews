@@ -24,6 +24,7 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path='/AllShows'>
           <Route index element={<AllShows/>} />
+          <Route path=':filter/:page' element={<AllShows/>} />
           <Route path=':filter' element={<AllShows/>} />
         </Route>
         <Route path='/Show/:show' element={<Show/>} />

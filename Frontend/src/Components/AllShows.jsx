@@ -9,6 +9,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const AllShows = () => {
     const { filter } = useParams();
+    const { page = 1 } = useParams();
     const viableFilters = ["Top rated", "Most popular", "Newest", "Lowest rated", "Movies", "TV series", "Anime"]
 
     const [sortingFilter, setSortingFilter] = useState("");
@@ -72,7 +73,7 @@ const AllShows = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/shows/AllShows/" + `${viableFilters.includes(filter) ? filter.toString() : "Top rated"}`).then(r =>{
+        fetch("http://localhost:5000/api/shows/AllShows/" + `${viableFilters.includes(filter) ? filter.toString() : "Top rated"}` + "/" + page).then(r =>{
             return r.json()
         }).then(r => {
             if(r !== null){
@@ -144,6 +145,12 @@ const AllShows = () => {
                     })
                 }
             </div>
+            {
+                page > 1 && <a href={"/AllShows/" + filter + "/" + (parseInt(page) - 1).toString()} className='text-styling' style={{marginRight: "20px"}}>Previous page</a>
+            }
+            {
+                movies !== undefined && movies.length === 9 && <a href={"/AllShows/" + filter + "/" + (parseInt(page) + 1).toString()} className='text-styling'>Next page</a>
+            }
         </div>
         </>
     )
