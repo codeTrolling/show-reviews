@@ -11,6 +11,7 @@ const AdminPage = () => {
     const [modifyShowOption, setModifyShowOption] = useState();
     const containerRef = useRef();
     const formInputLabels = ["show-id", ""]
+    const [loadingAnim, setLoadingAnim] = useState("loading-image");
 
     //check if user is admin
     const navigate = useNavigate();
@@ -31,13 +32,18 @@ const AdminPage = () => {
     }, [])
 
     const updateShows = () => {
-        // fetch("http://localhost:5000/api/shows/updateAll", {
-        //     method: "POST",
-        //     headers: {"Content-type": "application/json"},
-        //     body: JSON.stringify({
-        //         "sessionId": sessionStorage.getItem("sessionId")
-        //     })
-        // })
+        fetch("http://localhost:5000/api/shows/updateAll", {
+            method: "PATCH",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify({
+                "sessionId": sessionStorage.getItem("sessionId")
+            })
+        }).then(r => {
+            return r.json();
+        }).then(r => {
+            setLoadingAnim("");
+            alert(r.message);
+        })
     }
 
     return(
@@ -58,7 +64,7 @@ const AdminPage = () => {
             {modifyShowOption === "Add" && <AdminPageAddShow/>}
             {modifyShowOption === "Edit" && <div>Edit</div>}
             {modifyShowOption === "Delete" && <div><AdminPageDeleteShow/></div>}
-            {modifyShowOption === "Update" && <img src={loadingPic} className="loading-image"/>}
+            {modifyShowOption === "Update" && <img src={loadingAnim !== "" && loadingPic} className={loadingAnim}/>}
             
         </div>
         </>

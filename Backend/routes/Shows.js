@@ -4,6 +4,7 @@ const show = require("../models/show");
 const fs = require("fs");
 const path = require("path");
 const user = require("../models/user");
+const review = require("../models/review");
 
 // const multer = require("multer");
 // var imageFileName = "";
@@ -159,5 +160,37 @@ router.post("/:title", async (req, res) => {
         res.status(400).json({message: err.message})
     }
 })
+
+router.patch("/updateAll", async (req, res) => {
+    const getUser = await user.findOne({sessionId: {"$eq": req.body.sessionId}});
+    if(getUser === null || !getUser.isAdmin){
+        return;
+    }
+    const shows = await show.find();
+    try{
+        for(var item in shows){
+            var temp = await updateRatingAll(shows[item])
+        }
+        res.json({"message": "Successfully updated"})
+    }
+    catch (err){
+        res.json({"message": err.message})
+    }
+})
+
+const updateRatingAll = async (showToUpdate) =>{
+    const allReviewsForThisShow = await review.find({show: {"$eq": showToUpdate.title}});
+    var count = allReviewsForThisShow.length;
+    var addedRatings = 0;
+    allReviewsForThisShow.forEach(item => {
+        addedRatings += item.rating;
+    })
+    if(count > 0){
+        addedRatings /= count;
+    }
+    showToUpdate.rating = addedRatings
+    await showToUpdate.save();
+    return showToUpdate
+}
 
 module.exports = router;
