@@ -40,6 +40,8 @@ router.post('/', async (req, res) => {
         reviewToAdd["reviewContent"] = req.body.reviewContent;
     }
     try{
+        chosenShow.reviewsCount += 1;
+        await chosenShow.save();
         await reviewToAdd.save();
         res.status(200).json({"status": 200})
     } 
@@ -75,6 +77,7 @@ router.post("/userReviews", async (req, res) => {
 router.post("/deleteReview", async (req, res) => {
     const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
     const reviewToDelete = await reviews.findOne({"_id": {"$eq": req.body.reviewId}});
+    const reviewShow = await shows.findOne({"title": {"$eq": reviewToDelete.show}});
     if(getUser === null){
         res.status(400).json({"status": 400, "message": "Invalid user"});
         return;
@@ -87,6 +90,8 @@ router.post("/deleteReview", async (req, res) => {
         res.status(400).json({"status": 400, "message": "Invalid user"});
         return;
     }
+    reviewShow.reviewsCount -= 1;
+    await reviewShow.save();
     await reviewToDelete.deleteOne();
     res.status(200).json({"status": 200});
 })
