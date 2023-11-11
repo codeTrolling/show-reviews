@@ -20,34 +20,7 @@ const AdminPageAddShow = () => {
     const showCharacterImageIfPresentRef = useRef([]);
     const submitBtnRef = useRef();
 
-
-    // useEffect(() => {
-    //     const checkIfImageIsUploaded = () => {
-    //         if(castMemberImageRef.current[castMemberImageIndex] !== undefined){
-    //             if(castMemberImageRef.current[castMemberImageIndex].value !== ""){
-    //                 let temp = castMemberImage;
-    //                 temp[castMemberImageIndex] = "block"
-    //                 setCastMemberImage(temp);
-    //                 let reader = new FileReader();
-    //                 reader.readAsDataURL(castMemberImageRef.current[castMemberImageIndex].files[0]);
-    //                 reader.onload = () => {
-
-    //                     showCharacterImageIfPresentRef.current[castMemberImageIndex].source = castMemberImageRef.current[castMemberImageIndex].file;
-    //                 }
-    //                 console.log(showCharacterImageIfPresentRef.current[castMemberImageIndex].source)
-    //             }
-    //             else{
-    //                 let temp = castMemberImage;
-    //                 temp[castMemberImageIndex] = "none"
-    //                 setCastMemberImage(temp);
-    //             }
-    //             console.log(castMemberImageRef.current[castMemberImageIndex], castMemberImageRef.current[castMemberImageIndex].value)
-    //         }
-    //     }
-
-    //     checkIfImageIsUploaded();
-    // }, [castMemberImageStateChange])
-
+    //used to clear actor refs when removing an added actor record. basically if you try to add an actor but decide not to add them later clicking "remove" will clear the refs for that actor
     const clearRefs = () =>{
         if(castMemberCharacterNameInputRef.current[addCastButtonClicked.length - 1] !== undefined){
             castMemberCharacterNameInputRef.current.slice(0, -1);
@@ -59,7 +32,6 @@ const AdminPageAddShow = () => {
             castMemberIsMainCharacterRef.current.slice(0, -1);
         }
         if(castMemberImageRef.current[addCastButtonClicked.length - 2] !== undefined){
-            // castMemberImageRef.current.slice(0, -1);
             castMemberImageRef.current.slice(0, -1);
         }
     }
@@ -115,14 +87,7 @@ const AdminPageAddShow = () => {
         convertImageToBase64.readAsDataURL(showImageRef.current.files[0]);
         convertImageToBase64.onload = () => {
             console.log("I have loaded into the second one", mainCast)
-            //console.log(convertImageToBase64.result)
-        
 
-        // const formData = new FormData();
-        // formData.append("image", showImageRef.current.files[0])
-        // console.log(formData)
-        // var buffer = new Buffer.from(showImageRef.current.files[0])
-        // console.log(buffer);
         fetch("http://localhost:5000/api/shows", {
             method: "POST",
             headers: {"Content-type" : "application/json"},
@@ -205,5 +170,3 @@ const AdminPageAddShow = () => {
 }
 
 export default AdminPageAddShow
-
-//() => setCastMemberImageStateChange(!castMemberImageStateChange)

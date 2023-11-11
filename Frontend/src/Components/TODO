@@ -1,4 +1,2 @@
 admin page edit
 hash passwords and possibly use jwt instead of sessionid
-
-deleting a user should delete user related records (reviews, likes, dislikes, other users' likes etc.) currently only deals with reviews, likes and dislikes

@@ -55,17 +55,10 @@ const AdminPage = () => {
             <button className="text-styling heading-text-styling modify-show-options-button" onClick={() => {setModifyShowOption("Update"); updateShows()}}>Update shows</button>
         </div>
         <div className="flex modify-shows-container" ref={containerRef}>
-            
-            {/* {modifyShowOption === "Add" && <><div className="flex login-form">
-                <label htmlFor="show-id">Show id:</label>
-                <input type="text" name="show-id" id="show-id" className="login-form-input" />
-                </div> 
-                <button>ste</button></>} */}
             {modifyShowOption === "Add" && <AdminPageAddShow/>}
             {modifyShowOption === "Edit" && <div>Edit</div>}
             {modifyShowOption === "Delete" && <div><AdminPageDeleteShow/></div>}
             {modifyShowOption === "Update" && <img src={loadingAnim !== "" && loadingPic} className={loadingAnim}/>}
-            
         </div>
         </>
     )

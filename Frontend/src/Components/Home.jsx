@@ -30,7 +30,7 @@ const Home = () => {
         imageOrderState === 6 ? setImageOrderState(2) : setImageOrderState(imageOrderState + 1);
     }
 
-    // switch between images. magic values do NOT TOUCH!!!11!
+    // switch between images. magic values do NOT TOUCH!!!11! will fix at some point
     function checkImageOrder(){
         if(imageOrderState === 1){
              setFirstImage([0, "220px", "360px", "1"]);

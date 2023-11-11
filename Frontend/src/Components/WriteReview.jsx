@@ -60,8 +60,6 @@ const WriteReview = () => {
     }
 
     const submitReview = () => {
-        //console.log(/^\d+\.\d+$|^\d+$/.test(ratingInputRef.current.value))
-        //console.log(/\d/.test(ratingInputRef.current.value))
         if(ratingInputRef.current.value === ""){
             alert("You need to give a rating!");
             return

@@ -1,47 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const show = require("../models/show");
-const fs = require("fs");
-const path = require("path");
 const user = require("../models/user");
 const review = require("../models/review");
 
-// const multer = require("multer");
-// var imageFileName = "";
-// const storage = multer.diskStorage({
-//     destination: (req, file, callback) => {
-//         callback(null, "../backendImages")
-//     },
-//     filename: (req, file, callback) => {
-//         callback(null, Date.now() + path.extname(file.originalname));
-//         imageFileName = Date.now() + path.extname(file.originalname);
-//     }
-// })
-// const upload = multer({storage: storage});
 
 router.get("/", async (req, res) => {
     const shows = await show.find();
-    //const b64 = shows.image.toString('base64');
-    // CHANGE THIS IF THE IMAGE YOU ARE WORKING WITH IS .jpg OR WHATEVER
-    // console.log(shows[0])
-    //const b64 = Buffer.from(shows[0].image, "utf-8")
-    //console.log(b64.toString("base64"));
-    //const mimeType = 'image/jpg'; // e.g., image/png
-    //var replacing = b64.toString("base64");
-    //var fileData = replaceing.replace('/^data:image\/\w+;base64,/', "");
-    //var buffer = Buffer.from(fileData, 'base64');
-
-    //console.log(Buffer.from(shows[0].image, "utf-8"));
-    // console.log(shows[0].image.toString())
-    // const rawFile = shows[0].image.toString();
-    // var fileData = rawFile.replace('/^data:image\/\w+;base64,/', "");
-    // var buffer = Buffer.from(fileData, 'base64');
-    // const newFileName = 'nodejs.png';
-    // fs.writeFile("../backendImages/testimage.jpg", buffer, () => {console.log("cool")})
-    //res.send(`<p> ${replacing.toString("base64")}</p>`)
-    
-    //res.send(`<img src="data:${mimeType};base64,${shows[0].image.toString()}" />` + `<p>${shows[0].image.toString()}</p>`);
-    //res.send(`<img src=${shows[0].image}/>` + `<p> ${shows[0].image}</p>`)
     res.json(shows)
 })
 
@@ -98,21 +63,6 @@ router.get("/AllShows/:filter/:page", async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    // const promise = fs.promises.readFile(path(req.body.image));
-    // var imageBuffer;
-
-    // Promise.resolve(promise).then(function(buffer){
-    //     console.log(buffer);
-    //     console.log("WE ARE IN HERE!!!!!!!!!!!")
-    //     imageBuffer = buffer
-    // });
-    //const showImageBuffer = Buffer.from(req.body.image, "utf-8")
-    //console.log(showImageBuffer)
-    // var mainCastArray = req.body.mainCast;
-    // mainCastArray.forEach(element => {
-    //     const buffer = Buffer.from(element.image, "utf-8");
-    //     element.image = buffer;
-    // });
     const getUser = await user.findOne({sessionId: {"$eq": req.body.sessionId}});
     if(getUser === null || !getUser.isAdmin){
         res.status(200);
@@ -142,7 +92,6 @@ router.post('/', async (req, res) => {
 
 router.post("/search", async (req, res) => {
     const shows = await show.find({"title" : {"$regex" : req.body.title, "$options": "i"}}).sort({"reviewsCount" : 1}).limit(7);
-    //const shows = await show.find({"title" : '/.*' + req.body.title + '.*/i'}).sort({"reviewsCount" : 1}).limit(7);
     if(shows !== null){
         res.json(shows);
     }
@@ -183,6 +132,7 @@ router.patch("/updateAll", async (req, res) => {
     }
 })
 
+//update shows' ratings. in a practical scenario this would be called once or twice a day as i might take time and use a lot of the server's resources when storing large amout of data
 const updateRatingAll = async (showToUpdate) =>{
     const allReviewsForThisShow = await review.find({show: {"$eq": showToUpdate.title}});
     var count = allReviewsForThisShow.length;
@@ -190,6 +140,7 @@ const updateRatingAll = async (showToUpdate) =>{
     allReviewsForThisShow.forEach(item => {
         addedRatings += item.rating;
     })
+    // averages the ratings
     if(count > 0){
         addedRatings /= count;
     }

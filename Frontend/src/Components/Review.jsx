@@ -24,8 +24,6 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
         setHistory(page);
     }
     const navigate = useNavigate();
-    //const url = window.location.pathname.split('/').pop();
-
 
     const changeReviewBoxSize = (index) => {
         if(reviewsRef.current[index].offsetHeight <= 330){
@@ -66,8 +64,6 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
         const ifFuncInEffect = () => {
             if(likeButtonPopUpWindow[1] !== undefined){
                 let temp = [likeButtonRef.current[likeButtonPopUpWindow[1]].getBoundingClientRect().y, likeButtonRef.current[likeButtonPopUpWindow[1]].getBoundingClientRect().x]
-                // likeButtonWindowPopUpRef.current.style.top = temp[0] + window.scrollY - 35 + "px";
-                // likeButtonWindowPopUpRef.current.style.left = temp[1] - 30 + "px";
                 setLikeTopAndLeft([temp[0] + window.scrollY - 35 + "px", temp[1] - 30 + "px"])
             }
         }
@@ -79,8 +75,6 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
         const ifFuncInEffect = () => {
             if(dislikeButtonPopUpWindow[1] !== undefined){
                 let temp = [dislikeButtonRef.current[dislikeButtonPopUpWindow[1]].getBoundingClientRect().y, dislikeButtonRef.current[dislikeButtonPopUpWindow[1]].getBoundingClientRect().x]
-                //dislikeButtonWindowPopUpRef.current.style.top = temp[0] + window.scrollY - 35 + "px";
-                //dislikeButtonWindowPopUpRef.current.style.left = temp[1] - 30 + "px";
                 setDislikeTopAndLeft([temp[0] + window.scrollY - 35 + "px", temp[1] - 30 + "px"])
             }
         }
@@ -184,11 +178,6 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
             })
             
         }   
-        {/* {
-            reviewsToRender.map((item, index) => {
-                reviewsRef.current[index].offsetHeight < howBigIsTheReviewersProfile.current[index].offsetHeight + howLongIsTheReviewRef.current[index].offsetHeight + 50 ? <div className='flex more-or-less-btn-container'><button ref={e => changeReviewBoxButtonState.current[index] = e} onClick={() => changeReviewBoxSize(index)} className='text-styling more-or-less-btn'>Read more</button></div> : changeReviewBoxButtonState.current[index] = null
-            })
-        } */}
         </>
     )
 }

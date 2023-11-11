@@ -104,20 +104,15 @@ const NavigationBar = () => {
     <>
     <div className='flex modal-window' style={{opacity: modalWindow ? "1" : "0", pointerEvents: modalWindow ? "auto" : "none"}} onClick={() => setModalWindow(!modalWindow)}>
         <label className='text-styling heading-text-styling'>Are you sure you want to delete your profile?</label>
-        {/* <label htmlFor="nav-username" className='text-styling heading-text-styling'>Username:</label>
-        <input type="text" name="nav-username" id="nav-username" className='login-form-input' style={{width: "320px"}}/> */}
         <button className='submit-btn text-styling' style={{backgroundColor: "red"}} onClick={deleteProfile}>Delete</button>
     </div>
 
 
     <div className='flex nav-container'>
-        {/* <label className='nav-options'>Home</label> */}
         <Link to={"/"} className='nav-options'>Home</Link>
         <div>
-            {/* <label className='nav-options' onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>Shows</label> */}
             <Link to={"/AllShows/Top Rated"} className='nav-options' onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>Shows</Link>
             <div className='nav-drop-down-container' style={{position: 'absolute', opacity: `${dropDownMenu ? '1' : '0'}`, transform: 'translateY(' + `${dropDownMenu ? '0px)' : '-20px)'}`, pointerEvents: `${dropDownMenu ? 'all' : 'none'}`}} onMouseOver={showDropDownMenu} onMouseOut={() => { setDropDownMenu(false); }}>
-                {/* <label className='text-styling nav-drop-down'>Top rated</label> */}
                 <Link to="/AllShows/Top rated" className='text-styling nav-drop-down'>Top rated</Link>
                 <Link to="/AllShows/Most popular" className='text-styling nav-drop-down'>Popular</Link>
                 <Link to="/AllShows/Newest" className='text-styling nav-drop-down'>New</Link>
@@ -145,9 +140,6 @@ const NavigationBar = () => {
             <img src={userProfilePictureFetched !== null ? `${userProfilePictureFetched !== "" ? userProfilePictureFetched : pic}` : pic} alt="" className='nav-profile-pic' onClick={() => setProfileMenu(!profileMenu)}/>
             <div className='flex nav-profile-options' style={{opacity: profileMenu ? "1" : "0", transform: profileMenu ? "translateY(0)" : "translateY(-10px)", pointerEvents: profileMenu ? "auto" : "none"}}>
                 {
-                    //profileMenuOptions.map((item, index) => {
-                        //console.log("in map", userProfilePictureFetched)
-                        //return(
                         userProfilePictureFetched !== null ? <>
                             <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
                             <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
@@ -157,12 +149,7 @@ const NavigationBar = () => {
                             <Link to="/login" className='text-styling nav-profile-option' style={{textDecoration: "none"}} onClick={() => setProfileMenu(!profileMenu)}>Sign in</Link>
                             <Link to="/register" className='text-styling nav-profile-option' style={{textDecoration: "none"}} onClick={() => setProfileMenu(!profileMenu)}>Register</Link>
                         </>
-                        //)
-                    //})
                 }
-                {/* <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
-                <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
-                <label className='text-styling nav-profile-option'>Sign out</label> */}
             </div>
         </div>
     </div>

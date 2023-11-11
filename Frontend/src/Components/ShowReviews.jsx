@@ -67,14 +67,14 @@ const ShowReviews = () => {
                 { reviewsToRender !== undefined ? <Review reviewsToRender={reviewsToRender}></Review> : <p className='text-styling' style={{margin: "15px auto"}}>There are no reviews yet. Be the first person to submit one!</p>}
 
                 <div className="flex" style={{margin: "0 auto"}}>
+
+                {/* change pages. using a tag instead of link to cause a re-render allowing a new fetch to occur */}
                 {
                     parseInt(page) - 1 >= 1 && <a href={"/Show/" + show + "/reviews/" + (parseInt(page) - 1).toString()} className="text-styling" style={{marginRight: "50px"}}>Previous page</a>
                 }
                 {
                     reviewsToRender !== undefined && reviewsToRender.length >= 10 && <a href={"/Show/" + show + "/reviews/" + (parseInt(page) + 1).toString()} className="text-styling">Next page</a>
                 }
-                {/* <Link to={"/MyReviews/" + (parseInt(page) - 1 >= 1 ? (parseInt(page) - 1).toString() : "1")} className="text-styling">Previous page</Link>
-                <Link to={"/MyReviews/" + (userReviews.length >= 10 ? (parseInt(page) + 1).toString() : page)} className="text-styling">Next page</Link> */}
             </div>
             </div>
             

@@ -83,7 +83,6 @@ const MyReviews = () => {
         const testNoName = (index) => {
             if(reviewRef.current[index] !== undefined && reviewRef.current[index] !== null){
                 if(reviewRef.current[index].children[reviewRef.current[index].children.length - 1] !== undefined && reviewRef.current[index].offsetHeight > reviewInformationRef.current[index].offsetHeight + reviewContentRef.current[index].offsetHeight + 50){
-                    //reviewRef.current[index].children[reviewRef.current[index].children.length - 1].remove();
                     moreOrLessButtonRef.current[index].style.display = "none";
                     moreOrLessButtonRef.current[index].style.pointerEvents = "none";
                     reviewRef.current[index].style.height = reviewInformationRef.current[index].offsetHeight + reviewContentRef.current[index].offsetHeight + 50 + "px";
@@ -95,14 +94,9 @@ const MyReviews = () => {
                 }
             }
         }
-        // const forLoopTemp = [0,0,0,0,0,0,0,0,0,0]
-        // forLoopTemp.map((item, index) => {
-        //     testNoName(index);
         userReviews.map((item, index) => {
             testNoName(index)
         })
-            //console.log(reviewRef.current[index] !== undefined && reviewRef.current[index].children[reviewRef.current[index].children.length - 1])
-        //})
     }, [removeButtonsIfNeeded])
 
 
@@ -212,6 +206,7 @@ const MyReviews = () => {
                 </p>
             }
 
+            {/* change pages. using a tag instead of link to cause a re-render which sends a request for other reviews */}
             <div className="flex" style={{margin: "0 auto"}}>
                 {
                     parseInt(page) - 1 >= 1 && <a href={"/MyReviews/" + (parseInt(page) - 1).toString()} className="text-styling" style={{marginRight: "50px"}}>Previous page</a>
@@ -219,8 +214,6 @@ const MyReviews = () => {
                 {
                     userReviews.length >= 10 && <a href={"/MyReviews/" + (parseInt(page) + 1).toString()} className="text-styling">Next page</a>
                 }
-                {/* <Link to={"/MyReviews/" + (parseInt(page) - 1 >= 1 ? (parseInt(page) - 1).toString() : "1")} className="text-styling">Previous page</Link>
-                <Link to={"/MyReviews/" + (userReviews.length >= 10 ? (parseInt(page) + 1).toString() : page)} className="text-styling">Next page</Link> */}
             </div>
         </div>
         </>
