@@ -21,6 +21,7 @@ const MyReviews = () => {
 
     // get user reviews
     useEffect(() => {
+	if(sessionStorage.getItem("sessionId") !== null){
         if(specificShow === ""){
             fetch("http://localhost:5000/api/reviews/userReviews", {
                 method: "POST",
@@ -75,6 +76,7 @@ const MyReviews = () => {
                 }
             })
         }
+	}
     }, [specificShow])
 
 
