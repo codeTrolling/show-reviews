@@ -46,7 +46,7 @@ router.get("/AllShows/:filter/:page", async (req, res) => {
         shows = await show.find().sort({"rating" : 1, "reviewsCount": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "Movies"){
-        shows = await show.find({"type": "Movie"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
+        shows = await show.find({"type": "Movies"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "TV series"){
         shows = await show.find({"type": "TV series"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
