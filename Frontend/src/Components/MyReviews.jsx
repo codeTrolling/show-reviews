@@ -21,6 +21,7 @@ const MyReviews = () => {
 
 
     function fetchUsersReviews(){
+        console.log(userReviews);
         if(sessionStorage.getItem("sessionId") !== null){
             if(specificShow === ""){
                 fetch("http://localhost:5000/api/reviews/userReviews", {
@@ -34,12 +35,30 @@ const MyReviews = () => {
                     return r.json();
                 }).then(r => {
                     if(r.status === 200){
-                        if(r.reviews !== null){
-                            setUserReviews(r.reviews)
+                        if(r.reviews){
+                            console.log(r.reviews);
+                            console.log(userReviews[0]);
+                            let reviewsAreTheSame = true;
+                            for(let i = 0; i < userReviews.length; i++){
+                                if(r.reviews[i] && r.reviews[i]._id != userReviews[i]._id){
+                                    reviewsAreTheSame = false;
+                                    break;
+                                }
+                            }
+                            if(userReviews.length == 0 && userReviews.length != r.reviews.length || (!r.reviews[0] && userReviews[0])){
+                                //console.log(userReviews)
+                                reviewsAreTheSame = false;
+                            }
+                            if(!reviewsAreTheSame){
+                                setUserReviews(r.reviews)
+                                //console.log(r.reviews)
+                            }
                             setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
                         }
                         else{
-                            setUserReviews([]);
+                            if(userReviews.length > 0){
+                                setUserReviews([]);
+                            }
                             setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
                         }
                     }
@@ -61,13 +80,16 @@ const MyReviews = () => {
                     return r.json();
                 }).then(r => {
                     if(r.status === 200){
-                        if(r.reviews !== null){
+                        if(r.reviews){
                             let reviewsAreTheSame = true;
                             for(let i = 0; i < userReviews.length; i++){
-                                if(r.reviews[i] !== userReviews){
+                                if(r.reviews[i] && r.reviews[i]._id !== userReviews[i]._id){
                                     reviewsAreTheSame = false;
                                     break;
                                 }
+                            }
+                            if(userReviews.length == 0 && userReviews.length != r.reviews.length || (!r.reviews[0] && userReviews[0])){
+                                reviewsAreTheSame = false;
                             }
                             if(!reviewsAreTheSame){
                                 setUserReviews(r.reviews)
@@ -92,6 +114,7 @@ const MyReviews = () => {
 
     // get user reviews
     useEffect(() => {
+        console.log("in use effect rn")
         fetchUsersReviews();
     }, [specificShow, userReviews])
 
@@ -181,7 +204,7 @@ const MyReviews = () => {
         <>
         <div className='flex modal-window' style={{opacity: modalWindow ? "1" : "0", pointerEvents: modalWindow ? "auto" : "none"}} onClick={() => setModalWindow(!modalWindow)}>
         <label className='text-styling heading-text-styling'>Are you sure you want to delete this review? You cannot revert this action</label>
-        <button className='submit-btn text-styling' style={{backgroundColor: "red"}} onClick={() => {deleteReview(); fetchUsersReviews();}}>Delete</button>
+        <button className='submit-btn text-styling' style={{backgroundColor: "red"}} onClick={() => {deleteReview(); setUserReviews([]);}}>Delete</button>
         </div>
         <div className="flex rated-shows-viewport">
             <div className="flex" style={{marginTop: "15px"}}>
@@ -204,7 +227,7 @@ const MyReviews = () => {
             </div>
 
             {
-                userReviews[0] !== null ? userReviews.map((item, index) => {
+                userReviews[0] ? userReviews.map((item, index) => {
                     return(
                         <div className="flex my-reviews-review-container" key={index} ref={e => reviewRef.current[index] = e} style={{height: "300px"}}>
                             <div className="flex my-reviews-review-information" ref={e => reviewInformationRef.current[index] = e}>
