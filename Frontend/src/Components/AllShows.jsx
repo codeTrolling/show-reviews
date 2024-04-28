@@ -10,6 +10,7 @@ const AllShows = () => {
 
     const [sortingFilter, setSortingFilter] = useState("");
     const [movies, setMovies] = useState();
+    const [refetchAfterGoingToNextOrPreviousPage, setRefetchAfterGoingToNextOrPreviousPage] = useState(false);
 
     const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ const AllShows = () => {
                 navigate("/AllShows/Top rated");
             }
         });
-    },[sortingFilter])
+    },[sortingFilter, refetchAfterGoingToNextOrPreviousPage])
 
     return(
         <>
@@ -72,10 +73,10 @@ const AllShows = () => {
                 }
             </div>
             {
-                page > 1 && <a href={"/AllShows/" + filter + "/" + (parseInt(page) - 1).toString()} className='text-styling' style={{marginRight: "20px"}}>Previous page</a>
+                page > 1 && <Link to={"/AllShows/" + filter + "/" + (parseInt(page) - 1).toString()} className='text-styling' style={{marginRight: "20px"}} onClick={() => setRefetchAfterGoingToNextOrPreviousPage(!refetchAfterGoingToNextOrPreviousPage)}>Previous page</Link>
             }
             {
-                movies !== undefined && movies.length === 9 && <a href={"/AllShows/" + filter + "/" + (parseInt(page) + 1).toString()} className='text-styling'>Next page</a>
+                movies !== undefined && movies.length > 9 && <Link to={"/AllShows/" + filter + "/" + (parseInt(page) + 1).toString()} className='text-styling' onClick={() => setRefetchAfterGoingToNextOrPreviousPage(!refetchAfterGoingToNextOrPreviousPage)}>Next page</Link>
             }
         </div>
         </>
