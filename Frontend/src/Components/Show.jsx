@@ -1,5 +1,3 @@
-import mimpossible from '../Assets/MissionImpossiblePoster.jpg';
-import jojo from '../Assets/JoJo_Part_1_Phantom_Blood.jpg';
 import '../Styles/multiUse.css';
 import '../Styles/ShowStyles.css';
 import { useEffect, useState } from 'react';

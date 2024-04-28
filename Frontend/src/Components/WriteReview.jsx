@@ -1,7 +1,6 @@
 import '../Styles/multiUse.css';
 import '../Styles/WriteReviewStyles.css';
 import { useState, useRef, useEffect} from 'react';
-import jojo from '../Assets/JoJo_Part_1_Phantom_Blood.jpg';
 import { Navigate, useParams } from 'react-router-dom';
 
 const WriteReview = () => {
