@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../Styles/MyReviewsStyles.css";
 import { Link, Navigate, useParams } from "react-router-dom";
+import cross from "../Assets/CrossRed.png";
 
 const MyReviews = () => {
     const searchRef = useRef();
@@ -212,7 +213,7 @@ const MyReviews = () => {
                                 <label className="text-styling">{"Likes: " + item.likes.toString()}</label>
                                 <label className="text-styling">{"Dislikes: " + item.dislikes.toString()}</label>
                                 <label className="text-styling">{"Date: " + new Date(item.reviewDate).toLocaleDateString()}</label>
-                                <div style={{width: "50px", height: "50px", backgroundColor: "red"}} onClick={() => {setModalWindow(!modalWindow); setReviewToDelete(item._id)}}></div>
+                                <img src={cross} alt="" className="delete-review-btn" onClick={() => {setModalWindow(!modalWindow); setReviewToDelete(item._id)}} />
                             </div>
                             <p className="text-styling review-text" ref={e => reviewContentRef.current[index] = e}>{item.reviewContent !== undefined && item.reviewContent}</p>
                             <div className='flex more-or-less-btn-container' style={{borderRadius: "0 0 10px 10px"}}><button onClick={() => changeReviewBoxSize(index)} className='text-styling more-or-less-btn' ref={e => moreOrLessButtonRef.current[index] = e}>Read more</button></div>

@@ -7,6 +7,8 @@ import mimpossible from '../Assets/MissionImpossiblePoster.jpg';
 import castle from '../Assets/Castle_Season_1.jpg';
 import jwick from '../Assets/John_Wick_TeaserPoster.jpg';
 import { Link } from 'react-router-dom';
+import leftArrow from "../Assets/LeftArrowWhite.png";
+import rightArrow from "../Assets/RightArrowWhite.png";
 
 const Home = () => {
 
@@ -99,14 +101,14 @@ const Home = () => {
     return(
     <>
     <div className='flex' style={{position: "sticky"}}>
-        <div className='change-image-btn change-left-btn' onClick={() => changeImageToTheLeft(imageOrderState)}></div>
+        <img src={leftArrow} alt='' className='change-image-btn change-left-btn' onClick={() => changeImageToTheLeft(imageOrderState)}/>
         <div className='flex images-container'>
             {movies !== undefined && movies.map((item, index) =>(
                 <Link to={"/Show/" + `${item !== undefined && item.title}`} key={index}><img src={item.image} style={{transform: "translateX(" + `${movieImages[index][0]}px`, width: `${movieImages[index][1]}`, height: `${movieImages[index][2]}`, opacity: `${movieImages[index][3]}`}} className='side-image'></img></Link>
             )) }
 
         </div>
-        <div className='change-image-btn change-right-btn' onClick={() => changeImageToTheRight(imageOrderState)}></div>
+        <img src={rightArrow} alt='' className='change-image-btn change-right-btn' onClick={() => changeImageToTheRight(imageOrderState)}/>
     </div>   
 
 

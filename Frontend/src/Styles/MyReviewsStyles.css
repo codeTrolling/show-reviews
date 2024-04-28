@@ -54,3 +54,10 @@
     background-color: rgb(15, 15, 15);
     border-radius: 10px 10px 0 0;
 }
+
+.delete-review-btn{
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    cursor: pointer;
+}
