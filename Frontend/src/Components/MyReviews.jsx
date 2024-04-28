@@ -40,7 +40,7 @@ const MyReviews = () => {
                             console.log(userReviews[0]);
                             let reviewsAreTheSame = true;
                             for(let i = 0; i < userReviews.length; i++){
-                                if(r.reviews[i] && r.reviews[i]._id != userReviews[i]._id){
+                                if(r.reviews[i] && userReviews[i] && r.reviews[i]._id != userReviews[i]._id){
                                     reviewsAreTheSame = false;
                                     break;
                                 }
@@ -167,6 +167,7 @@ const MyReviews = () => {
         else{
             setProbableShows([]);
             setSpecificShow("");
+            setUserReviews([]);
         }
     }
 
