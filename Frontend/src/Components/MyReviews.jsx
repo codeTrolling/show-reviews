@@ -19,65 +19,80 @@ const MyReviews = () => {
     const [modalWindow, setModalWindow] = useState(false)
 
 
+    function fetchUsersReviews(){
+        if(sessionStorage.getItem("sessionId") !== null){
+            if(specificShow === ""){
+                fetch("http://localhost:5000/api/reviews/userReviews", {
+                    method: "POST",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify({
+                        "sessionId": sessionStorage.getItem("sessionId"),
+                        "page": page
+                    })
+                }).then(r => {
+                    return r.json();
+                }).then(r => {
+                    if(r.status === 200){
+                        if(r.reviews !== null){
+                            setUserReviews(r.reviews)
+                            setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
+                        }
+                        else{
+                            setUserReviews([]);
+                            setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
+                        }
+                    }
+                    else{
+                        alert(r.message);
+                    }
+                })
+            }
+            else{
+                fetch("http://localhost:5000/api/reviews/userReviews", {
+                    method: "POST",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify({
+                        "sessionId": sessionStorage.getItem("sessionId"),
+                        "title": specificShow,
+                        "page": page
+                    })
+                }).then(r => {
+                    return r.json();
+                }).then(r => {
+                    if(r.status === 200){
+                        if(r.reviews !== null){
+                            let reviewsAreTheSame = true;
+                            for(let i = 0; i < userReviews.length; i++){
+                                if(r.reviews[i] !== userReviews){
+                                    reviewsAreTheSame = false;
+                                    break;
+                                }
+                            }
+                            if(!reviewsAreTheSame){
+                                setUserReviews(r.reviews)
+                                console.log(r.reviews)
+                            }
+                            setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
+                        }
+                        else{
+                            if(userReviews.length > 0){
+                                setUserReviews([]);
+                            }
+                            setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
+                        }
+                    }
+                    else{
+                        alert(r.message);
+                    }
+                })
+            }
+        }
+    }
+
     // get user reviews
     useEffect(() => {
-	if(sessionStorage.getItem("sessionId") !== null){
-        if(specificShow === ""){
-            fetch("http://localhost:5000/api/reviews/userReviews", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({
-                    "sessionId": sessionStorage.getItem("sessionId"),
-                    "page": page
-                })
-            }).then(r => {
-                return r.json();
-            }).then(r => {
-                if(r.status === 200){
-                    if(r.reviews !== null){
-                        setUserReviews(r.reviews)
-                        setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
-                    }
-                    else{
-                        setUserReviews([]);
-                        setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
-                    }
-                }
-                else{
-                    alert(r.message);
-                }
-            })
-        }
-        else{
-            fetch("http://localhost:5000/api/reviews/userReviews", {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({
-                    "sessionId": sessionStorage.getItem("sessionId"),
-                    "title": specificShow,
-                    "page": page
-                })
-            }).then(r => {
-                return r.json();
-            }).then(r => {
-                if(r.status === 200){
-                    if(r.reviews !== null){
-                        setUserReviews(r.reviews)
-                        console.log(r.reviews)
-                        setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
-                    }
-                    else{
-                        setUserReviews([]);
-                        setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
-                    }
-                }
-                else{
-                    alert(r.message);
-                }
-            })
-        }
-	}
-    }, [specificShow])
+        fetchUsersReviews();
+    }, [specificShow, userReviews])
 
 
     //removes read more/less buttons if they are not needed
@@ -165,7 +180,7 @@ const MyReviews = () => {
         <>
         <div className='flex modal-window' style={{opacity: modalWindow ? "1" : "0", pointerEvents: modalWindow ? "auto" : "none"}} onClick={() => setModalWindow(!modalWindow)}>
         <label className='text-styling heading-text-styling'>Are you sure you want to delete this review? You cannot revert this action</label>
-        <button className='submit-btn text-styling' style={{backgroundColor: "red"}} onClick={deleteReview}>Delete</button>
+        <button className='submit-btn text-styling' style={{backgroundColor: "red"}} onClick={() => {deleteReview(); fetchUsersReviews();}}>Delete</button>
         </div>
         <div className="flex rated-shows-viewport">
             <div className="flex" style={{marginTop: "15px"}}>
