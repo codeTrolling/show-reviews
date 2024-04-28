@@ -1,10 +1,6 @@
 import '../Styles/multiUse.css';
 import { useEffect, useState } from 'react';
 import '../Styles/AllShowsStyles.css';
-import jojo from '../Assets/JoJo_Part_1_Phantom_Blood.jpg';
-import jwick from '../Assets/John_Wick_TeaserPoster.jpg';
-import mimpossible from '../Assets/MissionImpossiblePoster.jpg';
-import castle from '../Assets/Castle_Season_1.jpg';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const AllShows = () => {

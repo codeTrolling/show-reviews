@@ -1,11 +1,6 @@
 import '../Styles/multiUse.css';
 import { useRef, useState, useEffect } from 'react';
 import '../Styles/HomeStyles.css';
-import jojo from '../Assets/JoJo_Part_1_Phantom_Blood.jpg';
-import interstellar from '../Assets/Interstellar_film_poster.jpg';
-import mimpossible from '../Assets/MissionImpossiblePoster.jpg';
-import castle from '../Assets/Castle_Season_1.jpg';
-import jwick from '../Assets/John_Wick_TeaserPoster.jpg';
 import { Link } from 'react-router-dom';
 import leftArrow from "../Assets/LeftArrowWhite.png";
 import rightArrow from "../Assets/RightArrowWhite.png";
