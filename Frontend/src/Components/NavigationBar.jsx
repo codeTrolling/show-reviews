@@ -1,7 +1,7 @@
 import '../Styles/multiUse.css';
 import { useState, useRef, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import pic from "../Assets/instagramLogo.png";
+import pic from "../Assets/DefaultProfilePicture.png";
 
 const NavigationBar = () => {
 
