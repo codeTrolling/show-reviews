@@ -39,10 +39,6 @@ function App() {
           <Route index element={<MyReviews/>} />
           <Route path=':page' element={<MyReviews/>} />
         </Route>
-        <Route path='/RatedShows'>
-          <Route index element={<RatedShows/>} />
-          <Route path=':filter' element={<RatedShows/>} />
-        </Route>
         <Route path='/Secret/Admin' element={ <AdminPage/> } />
         <Route path='*' element={<NotFound/>} />
       </Routes>
