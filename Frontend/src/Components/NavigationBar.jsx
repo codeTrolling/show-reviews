@@ -121,7 +121,6 @@ const NavigationBar = () => {
         </div>
         <Link to="/MyReviews" className='nav-options'>My reviews</Link>
         <Link to="/WriteReview" className='nav-options'>Write review</Link>
-        <Link to="/RatedShows" className='nav-options'>Rated shows</Link>
         <div className='flex nav-search-show-container'>
             <input type="text" name="search-show" id="search-show" placeholder='Search shows' className='nav-options search-input' ref={searchShowRef} onChange={displayProbableShows}/>
             {
