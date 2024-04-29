@@ -10,7 +10,6 @@ import Register from './Components/Register';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from './Components/NotFound';
 import WriteReview from './Components/WriteReview';
-import RatedShows from './Components/RatedShows';
 import AdminPage from './Components/AdminPage';
 import MyReviews from './Components/MyReviews';
 import ShowReviews from './Components/ShowReviews';
