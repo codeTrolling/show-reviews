@@ -8,8 +8,8 @@ After you have installed them you need to go to the projects ```frontend``` fold
 You need to do the same with the ```backend``` folder.
 After that you need to run MongoDB by going to the folder where you have it installed and type ```mongod```. If you run into a problem regarding database location try specifiying the database path by using --dbpath: ```mongod --dbpath C:\YourPath```
 
-After starting your MongoDB server you can run the backend with ```npm run devStart```
-Then start the frontend with ```npm start```
+After starting your MongoDB server you can run the backend by going into its folder, opening a therminal window and typing ```npm run devStart```
+Then start the frontend by going into its folder and typing ```npm start```
 
 # Populate the database
 You can populate the database with some data by running a script. This allows you to check out some of this app's features without the need to manually populate the database.
