@@ -83,6 +83,7 @@
 .all-shows-show-image{
     height: 90%;
     max-height: 100px;
+    aspect-ratio: 9/14;
     margin: 0 10px 0 5px;
 }
 
