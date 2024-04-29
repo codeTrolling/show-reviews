@@ -1,3 +1,9 @@
+.rated-shows-viewport{
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
+
 .my-reviews-search{
     width: 300px;
     border: 2px solid rgb(0, 255, 136);
