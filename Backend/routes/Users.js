@@ -25,6 +25,20 @@ router.post('/checkAdmin', async (req, res) => {
     }
 })
 
+router.patch('/updateImage', async (req, res) => {
+    const getUser = await user.findOne({"sessionId": {"$eq": req.body.sessionId}});
+    if(getUser !== null && req.body.image !== null){
+        try{
+            getUser.image = req.body.image;
+            const updated = await getUser.save();
+            res.status(200).json({"status": 200});
+        }
+        catch(err) {
+            res.status(400).json({"message": err.message});
+        }
+    }
+})
+
 router.post('/register', async (req, res) => {
     const newUserEmail = await user.findOne({"email": {"$eq": req.body.email}})
     const newUserUsername = await user.findOne({"username": {"$eq": req.body.username}})
