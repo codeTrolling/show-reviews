@@ -42,13 +42,9 @@ router.patch('/updateImage', async (req, res) => {
 router.post('/register', async (req, res) => {
     const newUserEmail = await user.findOne({"email": {"$eq": req.body.email}})
     const newUserUsername = await user.findOne({"username": {"$eq": req.body.username}})
-    console.log(newUserUsername)
     if(newUserEmail === null && newUserUsername === null && req.body.password !== ""){
-        console.log("in the if")
         try{
-            console.log("in the try")
             let sessionI = await generateSessionid(30)
-            console.log("this is the problem")
             let newUser = new user({
                 email: req.body.email,
                 username: req.body.username,
@@ -58,7 +54,6 @@ router.post('/register', async (req, res) => {
                 sessionId: sessionI
             })
             const success = await newUser.save();
-            console.log("are we successful?")
             res.status(200).json({"status": 200, "sessionId" : sessionI});
         }
         catch (err){
