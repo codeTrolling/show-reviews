@@ -100,6 +100,31 @@ const NavigationBar = () => {
     }
 
 
+    function changeUserImage(){
+        var convertImageToB64 = new FileReader();
+        if(userProfilePictureRef.current.files[0] !== undefined && userProfilePictureRef.current.files[0] !== null){
+            convertImageToB64.readAsDataURL(userProfilePictureRef.current.files[0])
+            convertImageToB64.onload = () => {
+                fetch("http://localhost:5000/api/users/updateImage", {
+                    method: "PATCH",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify({
+                        sessionId: sessionStorage.getItem("sessionId"),
+                        image: convertImageToB64.result
+                    })
+                }).then(r => {
+                    if(r.status === 200){
+                        setUserProfilePictureFetched(convertImageToB64.result);
+                    }
+                    else{
+                        alert("Something went wrong: " + r.message);
+                    }
+                })
+            }
+        }
+    }
+
+
     return(
     <>
     <div className='flex modal-window' style={{opacity: modalWindow ? "1" : "0", pointerEvents: modalWindow ? "auto" : "none"}} onClick={() => setModalWindow(!modalWindow)}>
@@ -141,7 +166,7 @@ const NavigationBar = () => {
                 {
                         userProfilePictureFetched !== null ? <>
                             <label htmlFor="new-profile-pic"className='text-styling nav-profile-option'>Change profile picture</label>
-                            <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}}/>
+                            <input type="file" name="new-profile-pic" id="new-profile-pic" accept="image/png, image/jpeg, image/jpg" ref={userProfilePictureRef} style={{display: "none"}} onChange={changeUserImage}/>
                             <label className='text-styling nav-profile-option' onClick={() => {sessionStorage.removeItem("sessionId"); setProfileMenu(!profileMenu)}}>Sign out</label>
                             <label className='text-styling nav-profile-option' style={{color: "red"}} onClick={() => setModalWindow(!modalWindow)}>Delete account</label>
                         </> : <>
