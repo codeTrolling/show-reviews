@@ -23,7 +23,6 @@ const ShowReviews = () => {
     }, [])
 
     useEffect(() => {
-        console.log("setting reviews: ", reviewsToRender)
         fetch("http://localhost:5000/api/reviews/showReviews", {
             method: "POST",
             headers: {"Content-type": "application/json"},

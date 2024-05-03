@@ -28,7 +28,6 @@ const AdminPageDeleteShow = () => {
         }).then(r => {
             if(r.status === "200"){
                 alert("Successfully delete the show!");
-                console.log(r);
             }
             else{
                 alert("Something went wrong! Perhaps no record with this title was found. Here is the error:" + r.message);

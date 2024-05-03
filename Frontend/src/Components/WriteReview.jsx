@@ -30,7 +30,6 @@ const WriteReview = () => {
 
     const displayProbableShows = () => {
         if(chooseShowSearchRef.current.value !== ""){
-            console.log(chooseShowSearchRef.current.value)
             fetch("http://localhost:5000/api/shows/search", {
                 method: "POST",
                 headers: {"Content-type" : "application/json"},
@@ -39,13 +38,11 @@ const WriteReview = () => {
                 })
             }).then(r => {
                 if(r !== null){
-                    console.log(r)
                     return r.json()
                 }
                 return null
             }).then(r => {
                 if(r !== null){
-                    console.log(r);
                     setProbableShows([]);
                     r.forEach(element => {
                         setProbableShows(c => [...c, element])  

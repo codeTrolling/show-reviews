@@ -21,7 +21,6 @@ const MyReviews = () => {
 
 
     function fetchUsersReviews(){
-        console.log(userReviews);
         if(sessionStorage.getItem("sessionId") !== null){
             if(specificShow === ""){
                 fetch("http://localhost:5000/api/reviews/userReviews", {
@@ -36,8 +35,6 @@ const MyReviews = () => {
                 }).then(r => {
                     if(r.status === 200){
                         if(r.reviews){
-                            console.log(r.reviews);
-                            console.log(userReviews[0]);
                             let reviewsAreTheSame = true;
                             for(let i = 0; i < userReviews.length; i++){
                                 if(r.reviews[i] && userReviews[i] && r.reviews[i]._id != userReviews[i]._id){
@@ -46,12 +43,10 @@ const MyReviews = () => {
                                 }
                             }
                             if(userReviews.length == 0 && userReviews.length != r.reviews.length || (!r.reviews[0] && userReviews[0])){
-                                //console.log(userReviews)
                                 reviewsAreTheSame = false;
                             }
                             if(!reviewsAreTheSame){
                                 setUserReviews(r.reviews)
-                                //console.log(r.reviews)
                             }
                             setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
                         }
@@ -93,7 +88,6 @@ const MyReviews = () => {
                             }
                             if(!reviewsAreTheSame){
                                 setUserReviews(r.reviews)
-                                console.log(r.reviews)
                             }
                             setRemoveButtonsIfNeeded(!removeButtonsIfNeeded);
                         }
@@ -114,7 +108,6 @@ const MyReviews = () => {
 
     // get user reviews
     useEffect(() => {
-        console.log("in use effect rn")
         fetchUsersReviews();
     }, [specificShow, userReviews])
 

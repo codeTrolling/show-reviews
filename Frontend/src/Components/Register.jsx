@@ -23,7 +23,6 @@ const Register = () => {
             setRequiredFieldsColor("white");
             var convertImageToB64 = new FileReader();
             if(profileImageRef.current.files[0] !== undefined && profileImageRef.current.files[0] !== null){
-                console.log("in second if")
                 convertImageToB64.readAsDataURL(profileImageRef.current.files[0])
                 convertImageToB64.onload = () => {
                     fetch("http://localhost:5000/api/users/register", {
@@ -59,12 +58,9 @@ const Register = () => {
                         "image": null
                     })
                 }).then(r => {
-                    console.log("IN the then")
                     return r.json();
                 }).then(r => {
-                    console.log("in the other then")
                     if(r.status === 200){
-                        console.log("in second response if ", r)
                         sessionStorage.setItem("sessionId", r.sessionId)
                         navigate("/")
                     }

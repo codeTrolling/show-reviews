@@ -47,7 +47,6 @@ const AdminPageAddShow = () => {
             let temp = castMemberImage;
             temp[castMemberImageIndex] = URL.createObjectURL(event.target.files[0])
             setCastMemberImage(temp);
-            console.log(castMemberImage)
         }
        }
 
@@ -86,7 +85,6 @@ const AdminPageAddShow = () => {
         var convertImageToBase64 = new FileReader();
         convertImageToBase64.readAsDataURL(showImageRef.current.files[0]);
         convertImageToBase64.onload = () => {
-            console.log("I have loaded into the second one", mainCast)
 
         fetch("http://localhost:5000/api/shows", {
             method: "POST",
@@ -106,7 +104,6 @@ const AdminPageAddShow = () => {
         }).then(r => {
             return r.json()
         }).then(r =>{
-            console.log(r)
             if(r.status === "200"){
                 alert("Successfully added show!")
             }
