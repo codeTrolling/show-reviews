@@ -47,6 +47,15 @@ router.get("/randomizedShows", async (req, res) => {
     res.status(200).json({"status": 200, "shows": showsToSend})
 })
 
+router.get("/randomizedImages", async (req, res) => {
+    var showsToSend = [];
+    while(showsToSend.length < 5){
+        showsToSend.push(await getUniqueRandomShow(showsToSend).image);
+    }
+
+    res.status(200).json({"status": 200, "shows": showsToSend})
+})
+
 router.get("/AllShows/:filter/:page", async (req, res) => {
     var page = req.params.page;
     page = (page - 1) * 10;
