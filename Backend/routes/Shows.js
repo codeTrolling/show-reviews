@@ -20,8 +20,29 @@ router.get("/getShow/:show", async (req, res) => {
     }
 })
 
+
+async function getUniqueRandomShow(currentShows){
+    let isUnique = false;
+    while(!isUnique){
+        const randomShow = await show.aggregate([{"$sample": {"size": 1}}])
+        isUnique = true;
+        for(let i = 0; i < currentShows.length; i++){
+            if(currentShows[i].title == randomShow[0].title){
+                isUnique = false;
+                break;
+            }
+        }
+        if(isUnique){
+            return randomShow[0];
+        }
+    }
+}
+
 router.get("/randomizedShows", async (req, res) => {
-    const showsToSend = await show.aggregate([{"$sample": {"size": 5}}])
+    var showsToSend = [];
+    while(showsToSend.length < 5){
+        showsToSend.push(await getUniqueRandomShow(showsToSend));
+    }
 
     res.status(200).json({"status": 200, "shows": showsToSend})
 })
