@@ -40,6 +40,7 @@ async function getUniqueRandomShow(currentShows){
 
 router.get("/randomizedShows", async (req, res) => {
     var showsToSend = [];
+    // it looks better with more than 5. You can change this to make it look more appealing. The reason it is 5 right now is because populateDB.js script only adds 5 shows. 10 show images look pretty.
     while(showsToSend.length < 5){
         showsToSend.push(await getUniqueRandomShow(showsToSend));
     }
