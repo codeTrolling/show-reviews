@@ -20,4 +20,4 @@ Running the script should also give you more information in the therminal about 
 
 ## Database connection string
 If the backend server cannot connect to the database, try checking the connection string.
-You can find it at ```Backend -> server.js```. Its located somewhere at the top of the file.
+You can find it at ```Backend/server.js```. Its located somewhere at the top of the file.
