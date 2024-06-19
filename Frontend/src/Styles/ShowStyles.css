@@ -42,7 +42,7 @@
 .character-image{
     height: calc(100% - 4px);
     margin: 3px;
-    width: calc((100% - 4px) / 7);
+    aspect-ratio: 9 / 11;
 }
 
 .character-name{
