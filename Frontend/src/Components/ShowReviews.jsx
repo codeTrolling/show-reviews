@@ -7,6 +7,8 @@ const ShowReviews = () => {
     const { show } = useParams();
     const [redirect, setRedirect] = useState(false);
     const [reviewsToRender, setReviewsToRender] = useState(undefined);
+    const [likedReviews, setLikedReviews] = useState();
+    const [dislikedReviews, setDislikedReviews] = useState();
     const { page = 1 } = useParams();
 
     useEffect(() => {
@@ -28,13 +30,16 @@ const ShowReviews = () => {
             headers: {"Content-type": "application/json"},
             body: JSON.stringify({
                 "title": show,
-                "page": page
+                "page": page,
+                "sessionId": sessionStorage.getItem("sessionId")
             })
         }).then(r => {
             return r.json();
         }).then(r => {
             if(r.status === 200){
                 setReviewsToRender(r.reviews);
+                setLikedReviews(r.likedReviews);
+                setDislikedReviews(r.dislikedReviews);
             }
         })
     }, [page])
@@ -63,7 +68,7 @@ const ShowReviews = () => {
 
             <div className='flex show-show-info'>
                 <div className='flex description-heading'> <label className='text-styling heading-text-styling'>Reviews:</label></div>
-                { reviewsToRender !== undefined ? <Review reviewsToRender={reviewsToRender}></Review> : <p className='text-styling' style={{margin: "15px auto"}}>There are no reviews yet. Be the first person to submit one!</p>}
+                { reviewsToRender !== undefined ? <Review reviewsToRender={reviewsToRender} likedReviews={likedReviews} dislikedReviews={dislikedReviews}></Review> : <p className='text-styling' style={{margin: "15px auto"}}>There are no reviews yet. Be the first person to submit one!</p>}
 
                 <div className="flex" style={{margin: "0 auto"}}>
 
