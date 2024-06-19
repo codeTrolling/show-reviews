@@ -69,28 +69,30 @@ router.get("/AllShows/:filter/:page", async (req, res) => {
     if(page < 0){
         page = 0;
     }
-    var shows;
+    var shows = {};
     if(req.params.filter === "Top rated"){
-        shows = await show.find().sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
+        shows["shows"] = await show.find().sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "Most popular"){
-        shows = await show.find().sort({"reviewsCount" : -1, "rating": -1}).skip(page).limit(10)
+        shows["shows"] = await show.find().sort({"reviewsCount" : -1, "rating": -1}).skip(page).limit(10)
     }
     else if(req.params.filter === "Newest"){
-        shows = await show.find().sort({"releaseDate" : -1, "rating": 1}).skip(page).limit(10)
+        shows["shows"] = await show.find().sort({"releaseDate" : -1, "rating": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "Lowest rated"){
-        shows = await show.find().sort({"rating" : 1, "reviewsCount": 1}).skip(page).limit(10)
+        shows["shows"] = await show.find().sort({"rating" : 1, "reviewsCount": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "Movies"){
-        shows = await show.find({"type": "Movies"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
+        shows["shows"] = await show.find({"type": "Movies"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "TV series"){
-        shows = await show.find({"type": "TV series"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
+        shows["shows"] = await show.find({"type": "TV series"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
     }
     else if(req.params.filter === "Anime"){
-        shows = await show.find({"type": "Anime"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
+        shows["shows"] = await show.find({"type": "Anime"}).sort({"rating" : -1, "reviewsCount": 1}).skip(page).limit(10)
     }
+    let showsCount = await show.countDocuments({});
+    shows["totalPages"] = showsCount / 10;
     try{
         res.json(shows)
     }

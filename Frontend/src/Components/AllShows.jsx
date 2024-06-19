@@ -11,6 +11,7 @@ const AllShows = () => {
     const [sortingFilter, setSortingFilter] = useState("");
     const [movies, setMovies] = useState();
     const [refetchAfterGoingToNextOrPreviousPage, setRefetchAfterGoingToNextOrPreviousPage] = useState(false);
+    const [totalPages, setTotalPages] = useState();
 
     const navigate = useNavigate();
 
@@ -19,7 +20,8 @@ const AllShows = () => {
             return r.json()
         }).then(r => {
             if(r !== null){
-                setMovies(r);
+                setMovies(r.shows);
+                setTotalPages(r.totalPages);
             }
             else{
                 navigate("/AllShows/Top rated");
@@ -76,7 +78,7 @@ const AllShows = () => {
                 page > 1 && <Link to={"/AllShows/" + filter + "/" + (parseInt(page) - 1).toString()} className='text-styling' style={{marginRight: "20px"}} onClick={() => setRefetchAfterGoingToNextOrPreviousPage(!refetchAfterGoingToNextOrPreviousPage)}>Previous page</Link>
             }
             {
-                movies !== undefined && movies.length > 9 && <Link to={"/AllShows/" + filter + "/" + (parseInt(page) + 1).toString()} className='text-styling' onClick={() => setRefetchAfterGoingToNextOrPreviousPage(!refetchAfterGoingToNextOrPreviousPage)}>Next page</Link>
+                totalPages !== undefined && totalPages > page && <Link to={"/AllShows/" + filter + "/" + (parseInt(page) + 1).toString()} className='text-styling' onClick={() => setRefetchAfterGoingToNextOrPreviousPage(!refetchAfterGoingToNextOrPreviousPage)}>Next page</Link>
             }
         </div>
         </>
