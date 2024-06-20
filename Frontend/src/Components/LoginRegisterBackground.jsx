@@ -9,7 +9,6 @@ const LoginRegisterBackground = () => {
             return r.json();
         }).then(r => {
             if(r.status === 200){
-                console.log(r.shows)
                 setImages(r.shows);
             }
         })
