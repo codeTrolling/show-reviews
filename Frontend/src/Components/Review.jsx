@@ -25,6 +25,8 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
     }
     const navigate = useNavigate();
 
+    const [likedOrDislikedAReview, setLikedOrDislikedAReview] = useState(false);
+
     const changeReviewBoxSize = (index) => {
         if(reviewsRef.current[index].offsetHeight <= 330){
             reviewsRef.current[index].style.maxHeight = "";
@@ -115,6 +117,7 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
                 alert(r.message);
             }
         })
+        setLikedOrDislikedAReview(!likedOrDislikedAReview);
     }
     const userDislikesReview = (index) => {
         if(sessionStorage.getItem("sessionId") === null){
@@ -149,7 +152,10 @@ const Review = ( {reviewsToRender, likedReviews, dislikedReviews} ) => {
                 alert(r.message);
             }
         })
+        setLikedOrDislikedAReview(!likedOrDislikedAReview);
     }
+
+    useEffect(()=>{}, [likedOrDislikedAReview])
 
     return(
         <>
